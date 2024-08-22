@@ -35,6 +35,12 @@ create table new_delivery_ingredients
     basket_id   varchar references new_delivery_basket (id)
 );
 
+insert into building values (1, 'dodo1', 'FALSE');
+insert into building values (2, 'dodo2', 'FALSE');
+insert into building values (3, 'dodo3', 'FALSE');
+insert into building values (4, 'dodo4', 'FALSE');
+insert into building values (5, 'dodo5', 'FALSE');
+
 
 
 
