@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ДОДО ПИЦЦА</title>
+</head>
+<body>
+<a th:href="@{/dodo{id}/view-orders(id=${building.id})}">Заказы</a>
+<div>
+    <div th:if="${building.isNewDelivery()}">
+        <a th:href="@{/dodo{id}/view-new-delivery(id=${building.id})}">Приехала доставка!!!!</a>
+        <p th:text="'('+${newDelivery.size()} + 'шт)'"></p>
+    </div>
+</div>
+<div>
+
+    <h1 th:text="${building.getName()} + '  - CКЛАД'"></h1>
+    <div th:each="i : ${building.getIngredientList()}">
+        <hr>
+        <p th:text="${i.title}"></p>
+        <p th:text="${i.weight}"></p>
+        <hr>
+    </div>
+</div>
+</body>
+</html>

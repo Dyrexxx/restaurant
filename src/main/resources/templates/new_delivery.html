@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Доставка</title>
+</head>
+<body>
+<div>
+    <div>
+        <form method="post" th:action="@{/dodo{id}/accept-delivery(id=${building.id})}"
+              th:object="${emptyDeliveryBasket}"
+              th:each="i, j : ${newDelivery.entrySet()}">
+            <input type="hidden" th:value="${i}" name="id">
+            <h1 th:text="'Доставка №'+${j.index+1}"></h1>
+            <div th:each="item : ${i.getValue()}">
+                <p th:text="${item.getTitle()}"></p>
+                <p th:text="${item.getWeight()}"></p>
+            </div>
+            <input type="submit" value="Принять">
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
