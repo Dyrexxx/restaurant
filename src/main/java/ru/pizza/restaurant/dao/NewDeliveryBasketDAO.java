@@ -25,15 +25,15 @@ public class NewDeliveryBasketDAO extends AbstractDAO implements BaseOperationDB
         this.newDeliveryIngredientDAO = newDeliveryIngredientDAO;
     }
 
-    @Override
-    public Map findAll() {
-        return null;
-    }
-
     public Map<Basket, List<IngredientDTO>> findAllById(int buildingId) {
         String sql = "select b.id, i.title, weight from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where b.building_id=?";
         return getJdbcTemplate().query(sql, new GetBasket(), buildingId);
 
+    }
+
+    @Override
+    public List<Map> findAll() {
+        return List.of();
     }
 
     @Override

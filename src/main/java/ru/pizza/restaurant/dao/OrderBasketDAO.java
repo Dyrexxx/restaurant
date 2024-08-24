@@ -14,13 +14,12 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-public class OrderBasketDAO extends AbstractDAO implements BaseOperationDB {
+public class OrderBasketDAO extends AbstractDAO {
 
     protected OrderBasketDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
 
-    @Override
     public Map<OrderBasketContentDTO, List<OrderProductContentDTO>> findAll() {
         String sql = "select fio, address, p.title, count, is_ready from order_basket o join order_product p on o.id=p.order_basket_id";
         return getJdbcTemplate().query(sql, new Receiving());
@@ -51,7 +50,6 @@ public class OrderBasketDAO extends AbstractDAO implements BaseOperationDB {
         return getJdbcTemplate().query(sql, new Receiving(), id);
     }
 
-    @Override
     public Object findOneById(Object id) {
         return null;
     }
