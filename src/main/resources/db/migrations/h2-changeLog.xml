@@ -4,5 +4,5 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <include file="h2-create-table/h2-changelog.xml" relativeToChangelogFile="true"/>
-    <include file="v-1.0/changeLog.xml" relativeToChangelogFile="true"/>
+    <include file="postgres-changeLog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
