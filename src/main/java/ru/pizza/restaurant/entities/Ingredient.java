@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "warehouse")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode
+@Table(name = "warehouse")
 public class Ingredient {
     @Id
     @Column(name = "id")
