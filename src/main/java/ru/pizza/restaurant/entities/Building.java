@@ -17,8 +17,8 @@ public class Building {
     @Id
     @Column(name = "id")
     private int id;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
     @Column(name = "is_new_delivery")
     private boolean isNewDelivery;
     @OneToMany(mappedBy = "building")

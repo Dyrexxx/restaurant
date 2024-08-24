@@ -14,7 +14,7 @@
 </div>
 <div>
 
-    <h1 th:text="${building.getName()} + '  - CКЛАД'"></h1>
+    <h1 th:text="${building.getTitle()} + '  - CКЛАД'"></h1>
     <div th:each="i : ${building.getIngredientList()}">
         <hr>
         <p th:text="${i.title}"></p>
