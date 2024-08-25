@@ -8,17 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.pizza.restaurant.dto.new_delivery.Basket;
-import ru.pizza.restaurant.dto.new_delivery.IngredientDTO;
+import ru.pizza.restaurant.dto.new_delivery.base.BasketDeliveryDTO;
+import ru.pizza.restaurant.dto.new_delivery.transfer.BasketTransferDeliveryDTO;
 import ru.pizza.restaurant.entities.Building;
-import ru.pizza.restaurant.entities.Ingredient;
 import ru.pizza.restaurant.services.BuildingService;
 import ru.pizza.restaurant.services.NewDeliveryService;
 import ru.pizza.restaurant.services.OrderBasketService;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 
 public class DodoParent extends AbstractController {
 
@@ -46,36 +44,36 @@ public class DodoParent extends AbstractController {
 
     @GetMapping("/view-orders")
     public String viewOrders(Model model) {
-        model.addAttribute("orders", orderBasketService.getOrder(RESTAURANT_NAME.id));
+        model.addAttribute("orders", orderBasketService.findAll(RESTAURANT_NAME.id));
         return "orders";
     }
 
     @PostMapping("/make-order/{orderId}")
     public String makeOrder(@PathVariable String orderId) {
-        orderBasketService.done(RESTAURANT_NAME.id, orderId);
+        orderBasketService.update(RESTAURANT_NAME.id, orderId);
         return "redirect:/orders";
     }
 
 
     @PostMapping("/accept-delivery")
-    public String acceptDelivery(@ModelAttribute Basket emptyBasket) {
-        newDeliveryService.accept(emptyBasket.getId(), RESTAURANT_NAME.id);
+    public String acceptDelivery(@ModelAttribute BasketTransferDeliveryDTO emptyBasketTransferDeliveryDTO) {
+        newDeliveryService.update( RESTAURANT_NAME.id, emptyBasketTransferDeliveryDTO.getId());
         return "redirect:/dodo" + RESTAURANT_NAME.id + "/view-new-delivery";
     }
 
     @ModelAttribute("emptyDeliveryBasket")
-    public Basket emptyNewDeliveryBasket() {
-        return new Basket();
+    public BasketTransferDeliveryDTO emptyNewDeliveryBasket() {
+        return new BasketTransferDeliveryDTO();
     }
 
     @ModelAttribute("building")
     public Building building() {
-        return buildingService.get(RESTAURANT_NAME.getId());
+        return buildingService.findById(RESTAURANT_NAME.getId());
     }
 
     @ModelAttribute("newDelivery")
-    public Map<Basket, List<IngredientDTO>> ordersByBuilding() {
-        return newDeliveryService.getNewDelivery(RESTAURANT_NAME.getId());
+    public List<BasketDeliveryDTO> ordersByBuilding() {
+        return newDeliveryService.findAll(RESTAURANT_NAME.getId());
     }
 
     @Getter

@@ -1,32 +1,50 @@
 package ru.pizza.restaurant.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.NewDeliveryBasketDAO;
-import ru.pizza.restaurant.dto.new_delivery.Basket;
-import ru.pizza.restaurant.dto.new_delivery.IngredientDTO;
+import ru.pizza.restaurant.dto.new_delivery.base.BasketDeliveryDTO;
+import ru.pizza.restaurant.global_parent.BasketMethodsDB;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class NewDeliveryService {
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class NewDeliveryService implements BasketMethodsDB<BasketDeliveryDTO, String, Integer> {
     private final NewDeliveryBasketDAO newDeliveryBasketDAO;
 
-    @Autowired
-    public NewDeliveryService(NewDeliveryBasketDAO newDeliveryBasketDAO) {
-        this.newDeliveryBasketDAO = newDeliveryBasketDAO;
+    @Override
+    public List<BasketDeliveryDTO> findAll(Integer id) {
+        return newDeliveryBasketDAO.findAll(id);
+    }
+    @Override
+    public List<BasketDeliveryDTO> findAll() {
+        return List.of();
     }
 
-    public Map<Basket, List<IngredientDTO>> getNewDelivery(int id) {
-       return newDeliveryBasketDAO.findAllById(id);
-
+    @Override
+    public BasketDeliveryDTO findById(String id) {
+        return null;
     }
 
-
+    @Override
     @Transactional
-    public void accept(String basketId, int buildingId) {
-        newDeliveryBasketDAO.accept(basketId, buildingId);
+    public void update(int buildingId, String id) {
+        newDeliveryBasketDAO.update(buildingId, id);
+    }
+
+    @Override
+    @Transactional
+    public void save(BasketDeliveryDTO basketDeliveryDTO) {
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(String id) {
+
     }
 }

@@ -1,31 +1,47 @@
 package ru.pizza.restaurant.dao;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.dao.parent.AbstractDAO;
-import ru.pizza.restaurant.dao.parent.BaseOperationDB;
-import ru.pizza.restaurant.dto.new_delivery.AcceptIngredients;
-import ru.pizza.restaurant.row_map.new_delivery.GetForAcceptIngredient;
+import ru.pizza.restaurant.global_parent.BasketMethodsDB;
+import ru.pizza.restaurant.dto.new_delivery.transfer.IngredientTransferDeliveryDTO;
+import ru.pizza.restaurant.row_map.new_delivery.GetIngredientDeliveryRowMap;
 
 import java.util.List;
 
 
 @Component
-public class NewDeliveryIngredientDAO extends AbstractDAO implements BaseOperationDB<List, String> {
+@RequiredArgsConstructor
+public class NewDeliveryIngredientDAO implements BasketMethodsDB<IngredientTransferDeliveryDTO, String, String> {
+    private final JdbcTemplate jdbcTemplate;
 
-    protected NewDeliveryIngredientDAO(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
+    @Override
+    public List<IngredientTransferDeliveryDTO> findAll() {
+        return null;
+    }
+    @Override
+    public List<IngredientTransferDeliveryDTO> findAll(String id) {
+        String sql = "select title, weight, b.building_id from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where basket_id=?";
+        return jdbcTemplate.query(sql, new GetIngredientDeliveryRowMap(), id);
     }
 
     @Override
-    public List findAll() {
+    public IngredientTransferDeliveryDTO findById(String id) {
         return null;
     }
 
+    @Override
+    public void save(IngredientTransferDeliveryDTO ingredientTransferDeliveryDTO) {
+
+    }
 
     @Override
-    public List<AcceptIngredients> findOneById(String basketId) {
-        return  getJdbcTemplate().query(GetForAcceptIngredient.GET_INGREDIENT_SQL,
-                new GetForAcceptIngredient(), basketId);
+    public void deleteById(String id) {
+
+    }
+
+    @Override
+    public void update(int buildingId, String basketId) {
+
     }
 }

@@ -1,36 +1,47 @@
 package ru.pizza.restaurant.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.BuildingDAO;
 import ru.pizza.restaurant.dao.NewDeliveryBasketDAO;
 import ru.pizza.restaurant.entities.Building;
-import ru.pizza.restaurant.repository.BuildingRepository;
+import ru.pizza.restaurant.global_parent.BaseMethodsDB;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class BuildingService {
+public class BuildingService implements BaseMethodsDB<Building, Integer> {
     private final BuildingDAO buildingDAO;
     private final NewDeliveryBasketDAO newDeliveryBasketDAO;
 
-
-    public List<Building> index() {
+    @Override
+    public List<Building> findAll() {
         return buildingDAO.findAll();
     }
 
-    public Building get(int id) {
-        return buildingDAO.findOneById(id);
+
+    @Override
+    public Building findById(Integer id) {
+        return buildingDAO.findById(id);
     }
 
-
+    @Override
     @Transactional
-    public void receiveNewDelivery(List<Building> buildings) {
-        newDeliveryBasketDAO.receive(buildings);
+    public void save(Building building) {
+
+    }
+    @Transactional
+    public void save(List<Building> buildings) {
+        newDeliveryBasketDAO.save(buildings);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Integer id) {
+
     }
 }

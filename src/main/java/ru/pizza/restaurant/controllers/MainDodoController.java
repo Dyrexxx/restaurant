@@ -6,27 +6,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.pizza.restaurant.controllers.parent.AbstractController;
-import ru.pizza.restaurant.dto.order_basket.OrderBasketContentDTO;
-import ru.pizza.restaurant.dto.order_basket.OrderProductContentDTO;
-import ru.pizza.restaurant.models.Basket;
+import ru.pizza.restaurant.dto.order_basket.BasketOrderDTO;
 import ru.pizza.restaurant.entities.Building;
 import ru.pizza.restaurant.entities.Ingredient;
 import ru.pizza.restaurant.services.BuildingService;
-import ru.pizza.restaurant.services.IngredientService;
+import ru.pizza.restaurant.services.WarehouseService;
 import ru.pizza.restaurant.services.OrderBasketService;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/dodo")
 public class MainDodoController extends AbstractController {
 
-    private final IngredientService ingredientService;
+    private final WarehouseService ingredientService;
     private final OrderBasketService orderBasketService;
 
     @Autowired
-    public MainDodoController(BuildingService buildingService, IngredientService ingredientService, OrderBasketService orderBasketService) {
+    public MainDodoController(BuildingService buildingService, WarehouseService ingredientService, OrderBasketService orderBasketService) {
         super(buildingService);
         this.ingredientService = ingredientService;
         this.orderBasketService = orderBasketService;
@@ -34,28 +31,28 @@ public class MainDodoController extends AbstractController {
 
     @GetMapping("/buildings")
     public ResponseEntity<List<Building>> indexBuilding() {
-        return new ResponseEntity<>(buildingService.index(), HttpStatus.OK);
+        return new ResponseEntity<>(buildingService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/ingredients")
     public ResponseEntity<List<Ingredient>> indexIngredient() {
-        return new ResponseEntity<>(ingredientService.index(), HttpStatus.OK);
+        return new ResponseEntity<>(ingredientService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/new-delivery")
     @ResponseBody
     public void delivery(@RequestBody List<Building> buildings) {
-        buildingService.receiveNewDelivery(buildings);
+        buildingService.save(buildings);
     }
 
     @PostMapping("/newOrder")
     @ResponseBody
-    public void newOrder(@RequestBody Basket basket) {
-        orderBasketService.save(basket);
+    public void newOrder(@RequestBody BasketOrderDTO basketOrderDTO) {
+        orderBasketService.save(basketOrderDTO);
     }
 
     @GetMapping("/get-orders")
-    public ResponseEntity<Map<OrderBasketContentDTO, List<OrderProductContentDTO>>> getOrders() {
-        return new ResponseEntity<>(orderBasketService.getOrders(), HttpStatus.OK);
+    public ResponseEntity<List<BasketOrderDTO>> getOrders() {
+        return new ResponseEntity<>(orderBasketService.findAll(), HttpStatus.OK);
     }
 }

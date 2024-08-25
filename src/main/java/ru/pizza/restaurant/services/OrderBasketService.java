@@ -1,21 +1,20 @@
 package ru.pizza.restaurant.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.OrderBasketDAO;
-import ru.pizza.restaurant.dto.order_basket.OrderBasketContentDTO;
-import ru.pizza.restaurant.dto.order_basket.OrderProductContentDTO;
-import ru.pizza.restaurant.models.Basket;
+import ru.pizza.restaurant.dto.order_basket.BasketOrderDTO;
+import ru.pizza.restaurant.global_parent.BasketMethodsDB;
+
 
 import java.util.List;
-import java.util.Map;
+
 
 
 @Service
 @Transactional(readOnly = true)
-public class OrderBasketService {
+public class OrderBasketService implements BasketMethodsDB<BasketOrderDTO, String, Integer> {
     private final OrderBasketDAO orderBasketDAO;
 
     @Autowired
@@ -23,22 +22,32 @@ public class OrderBasketService {
         this.orderBasketDAO = orderBasketDAO;
     }
 
-    public Map<OrderBasketContentDTO, List<OrderProductContentDTO>> getOrders() {
+    @Override
+    public List<BasketOrderDTO> findAll() {
         return orderBasketDAO.findAll();
-
     }
-
-    public Map<OrderBasketContentDTO, List<OrderProductContentDTO>> getOrder(int id) {
-        return orderBasketDAO.findAllById(id);
+    @Override
+    public List<BasketOrderDTO> findAll(Integer id) {
+        return orderBasketDAO.findAll(id);
+    }
+    @Override
+    public BasketOrderDTO findById(String id) {
+        return null;
+    }
+    @Override
+    @Transactional
+    public void update(int buildingId, String id) {
+        orderBasketDAO.update(buildingId, id);
     }
 
     @Transactional
-    public void done(int buildingId, String orderId) {
-        orderBasketDAO.doneOrder(buildingId, orderId);
+    public void save(BasketOrderDTO basketOrderDTO) {
+        orderBasketDAO.save(basketOrderDTO);
     }
 
+    @Override
     @Transactional
-    public void save(Basket basket) {
-        orderBasketDAO.save(basket);
+    public void deleteById(String id) {
+
     }
 }

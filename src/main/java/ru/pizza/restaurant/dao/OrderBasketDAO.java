@@ -1,69 +1,66 @@
 package ru.pizza.restaurant.dao;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.dao.parent.AbstractDAO;
-import ru.pizza.restaurant.dao.parent.BaseOperationDB;
-import ru.pizza.restaurant.dto.order_basket.OrderBasketContentDTO;
-import ru.pizza.restaurant.dto.order_basket.OrderProductContentDTO;
-import ru.pizza.restaurant.models.Basket;
-import ru.pizza.restaurant.row_map.order_basket.Receiving;
+import ru.pizza.restaurant.global_parent.BasketMethodsDB;
+import ru.pizza.restaurant.dto.order_basket.BasketOrderDTO;
+import ru.pizza.restaurant.dto.order_basket.ProductOrderDTO;
+import ru.pizza.restaurant.row_map.order_basket.GetBasketOrderRowMap;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Component
-public class OrderBasketDAO extends AbstractDAO {
+@RequiredArgsConstructor
+public class OrderBasketDAO implements BasketMethodsDB<BasketOrderDTO, String, Integer> {
+    private final JdbcTemplate jdbcTemplate;
 
-    protected OrderBasketDAO(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
+    @Override
+    public List<BasketOrderDTO> findAll() {
+        String sql = "select o.fio, o.address, p.title, p.count from order_basket o join order_product p on o.id=p.order_basket_id";
+        return jdbcTemplate.query(sql, new GetBasketOrderRowMap());
+    }
+    @Override
+    public List<BasketOrderDTO> findAll(Integer id) {
+        String sql = "select o.fio, o.address, p.title, p.count, p.building_id from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
+        return jdbcTemplate.query(sql, new GetBasketOrderRowMap(), id);
     }
 
-    public Map<OrderBasketContentDTO, List<OrderProductContentDTO>> findAll() {
-        String sql = "select fio, address, p.title, count, is_ready from order_basket o join order_product p on o.id=p.order_basket_id";
-        return getJdbcTemplate().query(sql, new Receiving());
+    @Override
+    public void update(int buildingId, String id) {
+        jdbcTemplate.update("update order_product set is_ready = true where order_basket_id=? and building_id=?",
+                id, buildingId);
     }
 
-    public void save(Basket basket) {
+    @Override
+    public BasketOrderDTO findById(String id) {
+        return null;
+    }
+
+    @Override
+    public void save(BasketOrderDTO basketOrderDTO) {
         String orderId = String.valueOf(UUID.randomUUID());
 
-        getJdbcTemplate().update("insert into order_basket(id, fio, address) VALUES (?, ?, ?)",
+        jdbcTemplate.update("insert into order_basket(id, fio, address) VALUES (?, ?, ?)",
                 orderId,
-                basket.getFio(),
-                basket.getAddress());
+                basketOrderDTO.getFio(),
+                basketOrderDTO.getAddress());
 
-        for (Basket.BasketItem product : basket.getBasketViewItemList()) {
+        for (ProductOrderDTO product : basketOrderDTO.getProductOrderDTOList()) {
             String productId = String.valueOf(UUID.randomUUID());
 
-            getJdbcTemplate().update("insert into order_product(id, title, count, building_id, order_basket_id) VALUES (?,?, ?, ?, ?)",
+            jdbcTemplate.update("insert into order_product(id, title, building_id, order_basket_id) VALUES (?, ?, ?, ?)",
                     productId,
-                    product.getProductName(),
+                    product.getTitle(),
                     product.getCount(),
                     product.getBuildingId(),
                     orderId);
         }
+
     }
+    @Override
+    public void deleteById(String id) {
 
-    public Map findAllById(int id) {
-        String sql = "select fio, address, p.title, count, is_ready from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
-        return getJdbcTemplate().query(sql, new Receiving(), id);
     }
-
-    public Object findOneById(Object id) {
-        return null;
-    }
-
-
-    public Map<OrderBasketContentDTO, List<OrderProductContentDTO>> findById(int id) {
-        String sql = "select fio, address, p.title, count, is_ready from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
-        return getJdbcTemplate().query(sql, new Receiving(), id);
-    }
-
-    public void doneOrder(int buildingId, String orderId) {
-        getJdbcTemplate().update("update order_product set is_ready = true where order_basket_id=? and building_id=?",
-                orderId, buildingId);
-    }
-
-
 }
