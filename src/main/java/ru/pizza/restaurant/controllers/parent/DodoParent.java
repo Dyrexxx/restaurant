@@ -44,7 +44,7 @@ public class DodoParent extends AbstractController {
 
     @GetMapping("/view-orders")
     public String viewOrders(Model model) {
-        model.addAttribute("orders", orderBasketService.findAll(RESTAURANT_NAME.id));
+        model.addAttribute("ordersList", orderBasketService.findAll(RESTAURANT_NAME.id));
         return "orders";
     }
 

@@ -6,28 +6,18 @@
 </head>
 <body>
 <div>
-    <div th:each="i, j : ${orders.entrySet()}">
-        <div th:unless="${i.getKey().isReady()}">
-            <form method="post"
-                  th:action="@{/dodo{id}/make-order/{orderId}(id=${building.id}, orderId=${j.index})}">
-                <h1 th:text="'Доставка №'+${j.count}+' - Адрес: '+ ${i.getKey().address} + ' - ФИО: '+ ${i.getKey().fio}"></h1>
-                <div th:each="product : ${i.getValue()}">
-                    <p th:text="${product.title}"></p>
-                    <p th:text="${product.count}"></p>
-                </div>
-                <input type="submit" value="Готово">
-            </form>
-        </div>
+    <div th:if="${ordersList.isEmpty()}">
+        <h1>Заказов нет</h1>
     </div>
-    <h2>Ожидается доставки:</h2>
-    <div th:each="i, j : ${orders.entrySet()}">
-        <div th:if="${i.getKey().isReady()}">
-            <h1 th:text="'Доставка №'+${j.count}+' - Адрес: '+ ${i.getKey().address} + ' - ФИО: '+ ${i.getKey().fio}"></h1>
-            <div th:each="product : ${i.getValue()}">
+    <div th:each="i, j : ${ordersList}">
+        <form method="post"
+              th:action="@{/dodo{id}/make-order/{orderId}(id=${building.id}, orderId=${j.index})}">
+            <h1 th:text="'Доставка №'+${j.count}+' - Адрес: '+ ${i.address} + ' - ФИО: '+ ${i.fio}"></h1>
+            <div th:each="product : ${i.getProductOrderDTOList()}">
                 <p th:text="${product.title}"></p>
-                <p th:text="${product.count}"></p>
             </div>
-        </div>
+            <input type="submit" value="Готово">
+        </form>
     </div>
 </div>
 </body>

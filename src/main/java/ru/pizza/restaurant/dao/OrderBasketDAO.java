@@ -23,7 +23,7 @@ public class OrderBasketDAO implements BasketMethodsDB<BasketOrderDTO, String, I
     }
     @Override
     public List<BasketOrderDTO> findAll(Integer id) {
-        String sql = "select o.fio, o.address, p.title, p.count, p.building_id from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
+        String sql = "select o.fio, o.address, p.title, p.building_id from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
         return jdbcTemplate.query(sql, new GetBasketOrderRowMap(), id);
     }
 
@@ -53,7 +53,6 @@ public class OrderBasketDAO implements BasketMethodsDB<BasketOrderDTO, String, I
             jdbcTemplate.update("insert into order_product(id, title, building_id, order_basket_id) VALUES (?, ?, ?, ?)",
                     productId,
                     product.getTitle(),
-                    product.getCount(),
                     product.getBuildingId(),
                     orderId);
         }

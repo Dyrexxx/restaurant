@@ -29,7 +29,6 @@ public class GetBasketOrderRowMap
             };
             ProductOrderDTO product = new ProductOrderDTO() {{
                 setTitle(r.getString("title"));
-                setCount(r.getInt("count"));
                 setBuildingId(r.getInt("building_id"));
             }};
 
