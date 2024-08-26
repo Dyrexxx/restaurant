@@ -4,13 +4,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="create_new_delivery_basket_table" author="Дмитрий Утин">
-        <createTable tableName="new_delivery_basket">
+    <changeSet id="create_order_basket_table" author="Дмитрий Утин">
+        <createTable tableName="order_basket" schemaName="public" catalogName="restaurant">
             <column autoIncrement="false" name="id" type="varchar">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="building_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="new_delivery_basket_building_id_fkey"/>
+            <column name="fio" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar">
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>

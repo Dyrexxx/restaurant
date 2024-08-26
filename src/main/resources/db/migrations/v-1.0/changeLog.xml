@@ -3,5 +3,12 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <include file="2024-08-24--01-rename_building_column.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--01-create-building-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--02-create-warehouse-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--03-create-new-delivery-basket-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--04-create-new-delivery-ingredients-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--05-create-order-basket-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--06-create-order-product-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--07-create-order-product-ingredient-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-24--08-rename_building_column.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

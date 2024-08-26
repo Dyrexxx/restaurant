@@ -4,25 +4,19 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="create_new_delivery_ingredients_table" author="Дмитрий Утин">
-        <createTable tableName="new_delivery_ingredients">
+    <changeSet id="create_warehouse_table" author="Дмитрий Утин">
+        <createTable tableName="warehouse" schemaName="public" catalogName="restaurant">
             <column autoIncrement="true" name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="title" type="varchar">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="weight" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="status" type="varchar">
-                <constraints nullable="false"/>
-            </column>
             <column name="building_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="basket_id" type="varchar">
-                <constraints nullable="false" foreignKeyName="new_delivery_ingredients_basket_id_fkey"/>
+                <constraints nullable="false" foreignKeyName="warehouse_building_id_fkey" references="building(id)"/>
             </column>
         </createTable>
     </changeSet>

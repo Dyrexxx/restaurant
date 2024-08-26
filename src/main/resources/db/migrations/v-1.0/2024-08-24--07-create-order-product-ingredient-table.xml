@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="create_order_product_ingredient_table" author="Дмитрий Утин">
-        <createTable tableName="order_product_ingredient">
+        <createTable tableName="order_product_ingredient" schemaName="public" catalogName="restaurant">
             <column autoIncrement="true" name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

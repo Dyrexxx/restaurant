@@ -1,3 +1,4 @@
+
 insert into building(id, title) values (1, 'dodo1');
 insert into building(id, title) values (2, 'dodo2');
 insert into building(id, title) values (3, 'dodo3');
