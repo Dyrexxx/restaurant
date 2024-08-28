@@ -25,7 +25,7 @@ public class GetBasketDeliveryRowMap implements ResultSetExtractor<List<BasketDe
                 setTitle(r.getString("title"));
                 setWeight(r.getInt("weight"));
             }};
-            //TODO возможный рефакторинг
+            //TODO возможный рефакторинг(повторение кода)
             if (!basketDeliveryList.contains(basketDeliveryDTO)) {
                 basketDeliveryDTO.getIngredientList().add(ingredientDeliveryDTO);
                 basketDeliveryList.add(basketDeliveryDTO);

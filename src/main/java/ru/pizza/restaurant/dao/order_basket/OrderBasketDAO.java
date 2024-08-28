@@ -1,4 +1,4 @@
-package ru.pizza.restaurant.dao;
+package ru.pizza.restaurant.dao.order_basket;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,12 +18,12 @@ public class OrderBasketDAO implements BasketMethodsDB<BasketOrderDTO, String, I
 
     @Override
     public List<BasketOrderDTO> findAll() {
-        String sql = "select o.fio, o.address, p.title, p.count from order_basket o join order_product p on o.id=p.order_basket_id";
+        String sql = "select o.id, o.fio, o.address,p.count, p.title, p.count from order_basket o join order_product p on o.id=p.order_basket_id";
         return jdbcTemplate.query(sql, new GetBasketOrderRowMap());
     }
     @Override
     public List<BasketOrderDTO> findAll(Integer id) {
-        String sql = "select o.fio, o.address, p.title, p.count, p.building_id from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
+        String sql = "select o.id, o.fio, o.address, p.count, p.title, p.building_id from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
         return jdbcTemplate.query(sql, new GetBasketOrderRowMap(), id);
     }
 
@@ -47,10 +47,10 @@ public class OrderBasketDAO implements BasketMethodsDB<BasketOrderDTO, String, I
                 basketOrderDTO.getFio(),
                 basketOrderDTO.getAddress());
 
-        for (ProductOrderDTO product : basketOrderDTO.getProductOrderDTOList()) {
+        for (ProductOrderDTO product : basketOrderDTO.getProductsList()) {
             String productId = String.valueOf(UUID.randomUUID());
 
-            jdbcTemplate.update("insert into order_product(id, title, building_id, order_basket_id) VALUES (?, ?, ?, ?)",
+            jdbcTemplate.update("insert into order_product(id, title, count, building_id, order_basket_id) VALUES (?, ?, ?, ?, ?)",
                     productId,
                     product.getTitle(),
                     product.getCount(),

@@ -9,8 +9,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode
 @Table(name = "building")
 public class Building {

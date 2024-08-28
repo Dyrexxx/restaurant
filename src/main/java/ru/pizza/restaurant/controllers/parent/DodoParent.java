@@ -2,7 +2,9 @@ package ru.pizza.restaurant.controllers.parent;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,16 +20,17 @@ import ru.pizza.restaurant.services.OrderBasketService;
 import java.util.List;
 
 
-public class DodoParent extends AbstractController {
+public abstract class DodoParent {
 
     protected Restaurant RESTAURANT_NAME;
-    protected final NewDeliveryService newDeliveryService;
-    protected final OrderBasketService orderBasketService;
+    private final BuildingService buildingService;
+    private final NewDeliveryService newDeliveryService;
+    private final OrderBasketService orderBasketService;
 
 
     @Autowired
     public DodoParent(BuildingService buildingService, NewDeliveryService newDeliveryService, OrderBasketService orderBasketService) {
-        super(buildingService);
+        this.buildingService = buildingService;
         this.newDeliveryService = newDeliveryService;
         this.orderBasketService = orderBasketService;
     }
@@ -55,9 +58,9 @@ public class DodoParent extends AbstractController {
     }
 
 
-    @PostMapping("/accept-delivery")
-    public String acceptDelivery(@ModelAttribute BasketTransferDeliveryDTO emptyBasketTransferDeliveryDTO) {
-        newDeliveryService.update( RESTAURANT_NAME.id, emptyBasketTransferDeliveryDTO.getId());
+    @PostMapping("/accept-delivery/{basketId}")
+    public String acceptDelivery(@PathVariable String basketId) {
+        newDeliveryService.update( RESTAURANT_NAME.id, basketId);
         return "redirect:/dodo" + RESTAURANT_NAME.id + "/view-new-delivery";
     }
 

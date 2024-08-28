@@ -1,10 +1,9 @@
 package ru.pizza.restaurant.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.pizza.restaurant.dao.NewDeliveryBasketDAO;
+import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
 import ru.pizza.restaurant.dto.new_delivery.base.BasketDeliveryDTO;
 import ru.pizza.restaurant.global_parent.BasketMethodsDB;
 

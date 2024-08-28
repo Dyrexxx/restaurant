@@ -1,4 +1,4 @@
-package ru.pizza.restaurant.dao;
+package ru.pizza.restaurant.dao.new_delivery;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,7 +21,7 @@ public class NewDeliveryIngredientDAO implements BasketMethodsDB<IngredientTrans
     }
     @Override
     public List<IngredientTransferDeliveryDTO> findAll(String id) {
-        String sql = "select title, weight, b.building_id from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where basket_id=?";
+        String sql = "select i.title, i.weight, i.is_new, b.building_id from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where basket_id=?";
         return jdbcTemplate.query(sql, new GetIngredientDeliveryRowMap(), id);
     }
 

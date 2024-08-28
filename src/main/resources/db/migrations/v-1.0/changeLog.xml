@@ -11,4 +11,8 @@
     <include file="2024-08-24--06-create-order-product-table.xml" relativeToChangelogFile="true"/>
     <include file="2024-08-24--07-create-order-product-ingredient-table.xml" relativeToChangelogFile="true"/>
     <include file="2024-08-24--08-rename_building_column.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-27--01-drop-column-status-newdeliveryingredient-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-27--02-add-cascade-delete-newdeliveryingredient-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-27--03-add-column-isNew-newdeliveryingredient-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024-08-28--01-add-column-count-orderproduct-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

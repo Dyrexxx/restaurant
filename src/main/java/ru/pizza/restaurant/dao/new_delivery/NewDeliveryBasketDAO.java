@@ -1,4 +1,4 @@
-package ru.pizza.restaurant.dao;
+package ru.pizza.restaurant.dao.new_delivery;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -41,6 +41,7 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
 
         for (IngredientTransferDeliveryDTO ingredient : ingredientList) {
             if (ingredient.isNew()) {
+                System.out.println(ingredient+"-"+buildingId);
                 jdbcTemplate.update("insert into warehouse (title, weight, building_id) values (?, ?, ?)",
                         ingredient.getTitle(),
                         ingredient.getWeight(),
@@ -53,10 +54,6 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
         }
 
         this.deleteById(basketId);
-
-        if (this.isEmpty(buildingId)) {
-            jdbcTemplate.update("update new_delivery set is_new_delivery=false where id=?", buildingId);
-        }
     }
 
     @Override
@@ -68,14 +65,13 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
             String basketId = UUID.randomUUID().toString();
             jdbcTemplate.update("insert into new_delivery_basket(id, building_id) VALUES (?,?)", basketId, building.getId());
             for (Ingredient ingredient : building.getIngredientList()) {
-                jdbcTemplate.update("insert into new_delivery_ingredients (title, weight, basket_id, is_new, building_id) values (?, ?, ?, ?, ?)",
+                jdbcTemplate.update("insert into new_delivery_ingredients (title, weight, is_new, basket_id) values (?, ?, ?, ?)",
                         ingredient.getTitle(),
                         ingredient.getWeight(),
-                        basketId,
                         ingredient.isNew(),
-                        building.getId());
+                        basketId);
             }
-            jdbcTemplate.update("update building set is_new_delivery = ? where id = ? and is_new_delivery=false",
+            jdbcTemplate.update("update building set is_new_delivery = ? where id = ? and is_new_delivery='FALSE'",
                     true, building.getId());
         }
     }
@@ -83,12 +79,5 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
     @Override
     public void deleteById(String id) {
         jdbcTemplate.update("delete from new_delivery_basket where id=?", id);
-    }
-
-
-    private boolean isEmpty(int buildingId) {
-        return jdbcTemplate.query("SELECT count(*) FROM new_delivery_basket WHERE building_id=?",
-                (rs, rowNum) -> rs.getInt("count"),
-                buildingId).get(0) == 0;
     }
 }

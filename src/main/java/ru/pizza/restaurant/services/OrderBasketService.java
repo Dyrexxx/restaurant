@@ -3,7 +3,7 @@ package ru.pizza.restaurant.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.pizza.restaurant.dao.OrderBasketDAO;
+import ru.pizza.restaurant.dao.order_basket.OrderBasketDAO;
 import ru.pizza.restaurant.dto.order_basket.BasketOrderDTO;
 import ru.pizza.restaurant.global_parent.BasketMethodsDB;
 

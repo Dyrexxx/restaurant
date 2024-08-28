@@ -7,8 +7,8 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode
 @Table(name = "warehouse")
 public class Ingredient {

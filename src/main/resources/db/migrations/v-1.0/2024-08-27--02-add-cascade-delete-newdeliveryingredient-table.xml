@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="drop-fkey-newdeliveryingredient-table" author="Дмитрий Утин">
+        <dropForeignKeyConstraint baseTableName="new_delivery_ingredients"
+                                  constraintName="NEW_DELIVERY_INGREDIENTS_BASKET_ID_FKEY"/>
+    </changeSet>
+    <changeSet id="add-fkey-newdeliveryingredient-with-cascade-table" author="Дмитрий Утин">
+        <addForeignKeyConstraint baseTableName="new_delivery_ingredients"
+                                 baseColumnNames="basket_id"
+                                 constraintName="NEW_DELIVERY_INGREDIENTS_BASKET_ID_FKEY"
+                                 referencedTableName="new_delivery_basket"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+    </changeSet>
+</databaseChangeLog>

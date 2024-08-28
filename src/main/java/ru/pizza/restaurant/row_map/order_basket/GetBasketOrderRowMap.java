@@ -23,6 +23,7 @@ public class GetBasketOrderRowMap
         while (r.next()) {
             BasketOrderDTO basket = new BasketOrderDTO() {
                 {
+                    setId(r.getString("id"));
                     setFio(r.getString("fio"));
                     setAddress(r.getString("address"));
                 }
@@ -34,11 +35,11 @@ public class GetBasketOrderRowMap
             }};
 
             if (!basketOrderList.contains(basket)) {
-                basket.getProductOrderDTOList().add(product);
+                basket.getProductsList().add(product);
                 basketOrderList.add(basket);
             } else {
                 int index = basketOrderList.indexOf(basket);
-                basketOrderList.get(index).getProductOrderDTOList().add(product);
+                basketOrderList.get(index).getProductsList().add(product);
             }
         }
 

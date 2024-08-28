@@ -7,12 +7,12 @@
 <body>
 <div>
     <div>
-        <form method="post" th:action="@{/dodo{id}/accept-delivery(id=${building.id})}"
+        <form method="post" th:action="@{/dodo{id}/accept-delivery/{basketId}(id=${building.id}, basketId=${i.id})}"
               th:object="${emptyDeliveryBasket}"
-              th:each="i, j : ${newDelivery.entrySet()}">
+              th:each="i, j : ${newDelivery}">
             <input type="hidden" th:value="${i}" name="id">
             <h1 th:text="'Доставка №'+${j.index+1}"></h1>
-            <div th:each="item : ${i.getValue()}">
+            <div th:each="item : ${i.getIngredientList()}">
                 <p th:text="${item.getTitle()}"></p>
                 <p th:text="${item.getWeight()}"></p>
             </div>
