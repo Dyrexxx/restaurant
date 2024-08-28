@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=restaurant
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Dimik2001.
+    ports:
+      - 5432:5432
+
+  restaurant:
+    image: pizza-project/restaurant:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
