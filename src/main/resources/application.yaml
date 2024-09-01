@@ -6,6 +6,16 @@ spring:
     name: restaurant
   profiles:
     active: prod
+  liquibase:
+    change-log: classpath:db/migrations/changeLog.xml
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
 
 ---
 spring:
@@ -14,7 +24,7 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/restaurant;MODE=PostgreSQL;
+    url: jdbc:h2:mem:/restaurant;MODE=PostgreSQL;
     username: sa
     password: password
   jpa:
@@ -27,8 +37,6 @@ spring:
     init:
       mode: always
       data-locations: classpath:db/scripts/data/import_*_data.sql
-  liquibase:
-    change-log: classpath:db/migrations/h2-changeLog.xml
 
 ---
 spring:
@@ -44,5 +52,3 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  liquibase:
-    change-log: classpath:db/migrations/postgres-changeLog.xml
