@@ -25,7 +25,7 @@ public class NewDeliveryController {
         return "new_delivery";
     }
 
-    @ModelAttribute("emptyDeliveryBasket")
+    @ModelAttribute("emptyDeliveryBasketId")
     public BasketTransferDeliveryDTO emptyNewDeliveryBasket() {
         return new BasketTransferDeliveryDTO();
     }

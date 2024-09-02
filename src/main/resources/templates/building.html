@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ДОДО ПИЦЦА</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 <a th:href="@{/restaurant/orders/{id}(id=${building.id})}">Заказы</a>
@@ -11,14 +12,23 @@
         <a th:href="@{/restaurant/new-delivery/{id}(id=${building.id})}">Приехала доставка!!!!</a>
     </div>
 </div>
-<div>
-    <h1 th:text="${building.getTitle()} + '  - CКЛАД'"></h1>
-    <div th:each="i : ${building.getIngredientList()}">
-        <hr>
-        <p th:text="${i.title}"></p>
-        <p th:text="${i.weight}"></p>
-        <hr>
-    </div>
-</div>
+<h1 style="align-content: center" th:text="${building.getTitle()} + '  - CКЛАД'"></h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Название</th>
+        <th scope="col">Количество</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="i, j : ${building.getIngredientList()}">
+        <th scope="row" th:text="${j.index+1}"/>
+        <td th:text="${i.title}"/>
+        <td th:text="${i.weight}+' грамм'"/>
+    </tr>
+    </tbody>
+</table>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

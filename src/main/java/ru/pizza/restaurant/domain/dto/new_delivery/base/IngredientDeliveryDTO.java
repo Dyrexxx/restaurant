@@ -6,4 +6,5 @@ import lombok.Data;
 public class IngredientDeliveryDTO {
     private String title;
     private int weight;
+    private boolean isNew;
 }

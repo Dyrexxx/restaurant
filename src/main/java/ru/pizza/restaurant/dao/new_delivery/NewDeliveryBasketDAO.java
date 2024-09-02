@@ -32,7 +32,7 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
      */
     @Override
     public List<BasketDeliveryDTO> findAll(Integer buildingId) {
-        String sql = "SELECT b.id, i.title, weight FROM new_delivery_basket b JOIN new_delivery_ingredients i ON b.id=i.basket_id WHERE b.building_id=?";
+        String sql = "SELECT b.id, i.title, i.weight, i.is_new FROM new_delivery_basket b JOIN new_delivery_ingredients i ON b.id=i.basket_id WHERE b.building_id=?";
         return jdbcTemplate.query(sql, new GetBasketDeliveryRowMap(), buildingId);
     }
 
