@@ -8,10 +8,10 @@ import ru.pizza.restaurant.services.rest.RestBuildingService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/buildings")
+@RequestMapping("restaurant/api")
 @RequiredArgsConstructor
 public class RestBuildingController {
-    private final RestBuildingService buildingService;
+    private final RestBuildingService restBuildingService;
 
     /***
      *
@@ -19,7 +19,18 @@ public class RestBuildingController {
      */
     @GetMapping("/buildings")
     public List<Building> index() {
-        return buildingService.findAll();
+        return restBuildingService.findAll();
+    }
+
+
+    /***
+     *
+     * @param id ID ресторана
+     * @return возвращает определенный ресторан
+     */
+    @GetMapping("/buildings/{id}")
+    public Building findById(@PathVariable int id) {
+        return restBuildingService.findById(id);
     }
 
     /***
@@ -30,6 +41,6 @@ public class RestBuildingController {
      */
     @PatchMapping("/buildings")
     public void updateOrSave(@RequestBody List<Building> buildings) {
-        buildingService.save(buildings);
+        restBuildingService.updateOrSave(buildings);
     }
 }

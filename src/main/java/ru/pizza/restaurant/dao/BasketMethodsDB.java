@@ -1,4 +1,4 @@
-package ru.pizza.restaurant.impl;
+package ru.pizza.restaurant.dao;
 
 import java.util.List;
 

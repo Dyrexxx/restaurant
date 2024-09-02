@@ -1,0 +1,1 @@
+insert into order_product_ingredient values (1, 'dsad', 333, 'basket_1')

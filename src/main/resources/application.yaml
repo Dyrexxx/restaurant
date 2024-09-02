@@ -13,17 +13,15 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://eureka:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
-dima:
-  test: "1234"
 
 ---
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: test
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:/restaurant;MODE=PostgreSQL;
@@ -39,6 +37,40 @@ spring:
     init:
       mode: always
       data-locations: classpath:db/scripts/data/import_*_data.sql
+eureka:
+  instance:
+    hostname: localhost
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/restaurant-dev
+    username: postgres
+    password: Dimik2001.
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+
+      data-locations:
+        - classpath:db/scripts/data/import_1_clear_shema.sql
+        - classpath:db/scripts/data/import_2_building_data.sql
+        - classpath:db/scripts/data/import_3_warehouse_data.sql
+        - classpath:db/scripts/data/import_4_newdeliverybasket_data.sql
+        - classpath:db/scripts/data/import_5_newdeliveryingredients_data.sql
+        - classpath:db/scripts/data/import_6_orderbasket_data.sql
+        - classpath:db/scripts/data/import_7_orderproduct_data.sql
+        - classpath:db/scripts/data/import_8_orderproductingredient_data.sql
+eureka:
+  instance:
+    hostname: localhost
 
 ---
 spring:
@@ -54,3 +86,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+eureka:
+  instance:
+    hostname: eureka

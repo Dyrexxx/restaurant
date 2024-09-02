@@ -8,7 +8,7 @@ import ru.pizza.restaurant.services.rest.RestOrderBasketService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/restaurant/api")
 @RequiredArgsConstructor
 public class RestOrderController {
     private final RestOrderBasketService orderBasketService;
@@ -17,9 +17,26 @@ public class RestOrderController {
      *
      * @return список всех заказов онлайн-покупателей
      */
-    @GetMapping
+    @GetMapping("/orders")
     public List<BasketOrderDTO> index() {
-        return orderBasketService.findAll();
+        return orderBasketService.index();
+    }
+
+    /**
+     * @param buildingId id определенного ресторана
+     * @return все онлайн-заказы определенного ресторана
+     */
+    @GetMapping("/orders/{buildingId}")
+    public List<BasketOrderDTO> index(@PathVariable Integer buildingId) {
+        return orderBasketService.index(buildingId);
+    }
+
+    /***
+     *
+     */
+    @PatchMapping("/orders/{buildingId}/{orderId}")
+    public void prepareOrder(@PathVariable int buildingId, @PathVariable String orderId) {
+        orderBasketService.update(buildingId, orderId);
     }
 
     /***

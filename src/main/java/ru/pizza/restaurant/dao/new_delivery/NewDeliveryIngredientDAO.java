@@ -3,7 +3,7 @@ package ru.pizza.restaurant.dao.new_delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.impl.BasketMethodsDB;
+import ru.pizza.restaurant.dao.BasketMethodsDB;
 import ru.pizza.restaurant.domain.dto.new_delivery.transfer.IngredientTransferDeliveryDTO;
 import ru.pizza.restaurant.row_map.new_delivery.GetIngredientDeliveryRowMap;
 

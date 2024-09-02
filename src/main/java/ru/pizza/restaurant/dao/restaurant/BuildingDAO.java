@@ -1,8 +1,8 @@
-package ru.pizza.restaurant.dao;
+package ru.pizza.restaurant.dao.restaurant;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.impl.BaseMethodsDB;
+import ru.pizza.restaurant.dao.BaseMethodsDB;
 import ru.pizza.restaurant.domain.entities.Building;
 import ru.pizza.restaurant.repositories.BuildingRepository;
 
@@ -26,6 +26,10 @@ public class BuildingDAO implements BaseMethodsDB<Building, Integer> {
     @Override
     public void save(Building building) {
 
+    }
+
+    public void saveAll(List<Building> buildings) {
+        buildingRepository.saveAll(buildings);
     }
 
 

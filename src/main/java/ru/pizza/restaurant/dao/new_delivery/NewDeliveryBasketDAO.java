@@ -3,7 +3,7 @@ package ru.pizza.restaurant.dao.new_delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.impl.BasketMethodsDB;
+import ru.pizza.restaurant.dao.BasketMethodsDB;
 import ru.pizza.restaurant.domain.dto.new_delivery.base.BasketDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.new_delivery.transfer.IngredientTransferDeliveryDTO;
 import ru.pizza.restaurant.domain.entities.Building;
@@ -19,21 +19,29 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
     private final NewDeliveryIngredientDAO newDeliveryIngredientDAO;
     private final JdbcTemplate jdbcTemplate;
 
+    //Пригодится. В main-warehouse организовать отслеживание доставки нового привоза
     @Override
     public List<BasketDeliveryDTO> findAll() {
         return null;
     }
 
+    /***
+     *
+     * @param buildingId ID ресторана
+     * @return Возвращает все текущие доставки на ресторан
+     */
     @Override
     public List<BasketDeliveryDTO> findAll(Integer buildingId) {
-        String sql = "select b.id, i.title, weight from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where b.building_id=?";
+        String sql = "SELECT b.id, i.title, weight FROM new_delivery_basket b JOIN new_delivery_ingredients i ON b.id=i.basket_id WHERE b.building_id=?";
         return jdbcTemplate.query(sql, new GetBasketDeliveryRowMap(), buildingId);
     }
 
+    //Возможно пригодится
     @Override
     public BasketDeliveryDTO findById(String id) {
         return null;
     }
+
 
     @Override
     public void update(int buildingId, String basketId) {

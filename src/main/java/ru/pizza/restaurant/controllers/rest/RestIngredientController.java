@@ -10,18 +10,18 @@ import ru.pizza.restaurant.services.rest.RestWarehouseService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ingredients")
+@RequestMapping("restaurant/api")
 @RequiredArgsConstructor
 public class RestIngredientController {
     private final RestWarehouseService ingredientService;
 
     /***
      *
-     * @return список складов действующих ресторанов
+     * @return Возвращает список всех складов
      */
     @GetMapping("/ingredients")
     public List<Ingredient> index() {
-        return ingredientService.findAll();
+        return ingredientService.index();
     }
 
 }

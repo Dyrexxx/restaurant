@@ -9,7 +9,7 @@
     <div>
         <form method="post" th:action="@{/dodo{id}/accept-delivery/{basketId}(id=${building.id}, basketId=${i.id})}"
               th:object="${emptyDeliveryBasket}"
-              th:each="i, j : ${newDelivery}">
+              th:each="i, j : ${newDeliveryList}">
             <input type="hidden" th:value="${i}" name="id">
             <h1 th:text="'Доставка №'+${j.index+1}"></h1>
             <div th:each="item : ${i.getIngredientList()}">

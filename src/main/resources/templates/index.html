@@ -2,25 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ДОДО ПИЦЦА</title>
+    <title>Список</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-<a th:href="@{/dodo{id}/view-orders(id=${building.id})}">Заказы</a>
-<div>
-    <div th:if="${building.isNewDelivery()}">
-        <a th:href="@{/dodo{id}/view-new-delivery(id=${building.id})}">Приехала доставка!!!!</a>
-        <p th:text="'('+${newDelivery.size()} + 'шт)'"></p>
-    </div>
-</div>
-<div>
-
-    <h1 th:text="${building.getTitle()} + '  - CКЛАД'"></h1>
-    <div th:each="i : ${building.getIngredientList()}">
-        <hr>
-        <p th:text="${i.title}"></p>
-        <p th:text="${i.weight}"></p>
-        <hr>
-    </div>
-</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Название</th>
+        <th scope="col">Адрес</th>
+        <th scope="col">Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="i, j : ${buildingList}">
+        <th scope="row" th:text="${j.index}"/>
+        <td th:text="${i.title}"/>
+        <td>Otto</td>
+        <td>@mdo</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

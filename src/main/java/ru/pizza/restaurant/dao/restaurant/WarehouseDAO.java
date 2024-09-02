@@ -1,9 +1,9 @@
-package ru.pizza.restaurant.dao;
+package ru.pizza.restaurant.dao.restaurant;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.pizza.restaurant.domain.entities.Ingredient;
-import ru.pizza.restaurant.impl.BaseMethodsDB;
+import ru.pizza.restaurant.dao.BaseMethodsDB;
 import ru.pizza.restaurant.repositories.WarehouseRepository;
 
 import java.util.List;

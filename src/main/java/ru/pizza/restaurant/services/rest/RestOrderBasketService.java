@@ -1,40 +1,33 @@
 package ru.pizza.restaurant.services.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.order_basket.OrderBasketDAO;
 import ru.pizza.restaurant.domain.dto.order_basket.BasketOrderDTO;
-import ru.pizza.restaurant.impl.BasketMethodsDB;
+import ru.pizza.restaurant.services.BaseMethodsBasketService;
+import ru.pizza.restaurant.services.BaseMethodsService;
 
 
 import java.util.List;
 
 
-
 @Service
 @Transactional(readOnly = true)
-public class RestOrderBasketService implements BasketMethodsDB<BasketOrderDTO, String, Integer> {
+@RequiredArgsConstructor
+public class RestOrderBasketService implements BaseMethodsBasketService<BasketOrderDTO, Integer>, BaseMethodsService<BasketOrderDTO, Integer> {
     private final OrderBasketDAO orderBasketDAO;
 
-    @Autowired
-    public RestOrderBasketService(OrderBasketDAO orderBasketDAO) {
-        this.orderBasketDAO = orderBasketDAO;
+    @Override
+    public List<BasketOrderDTO> index() {
+        return orderBasketDAO.findAll();
     }
 
     @Override
-    public List<BasketOrderDTO> findAll() {
-        return orderBasketDAO.findAll();
-    }
-    @Override
-    public List<BasketOrderDTO> findAll(Integer id) {
+    public List<BasketOrderDTO> index(Integer id) {
         return orderBasketDAO.findAll(id);
     }
-    @Override
-    public BasketOrderDTO findById(String id) {
-        return null;
-    }
-    @Override
+
     @Transactional
     public void update(int buildingId, String id) {
         orderBasketDAO.update(buildingId, id);
@@ -45,9 +38,4 @@ public class RestOrderBasketService implements BasketMethodsDB<BasketOrderDTO, S
         orderBasketDAO.save(basketOrderDTO);
     }
 
-    @Override
-    @Transactional
-    public void deleteById(String id) {
-
-    }
 }
