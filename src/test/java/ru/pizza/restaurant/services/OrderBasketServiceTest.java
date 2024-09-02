@@ -6,8 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.pizza.restaurant.dao.order_basket.OrderBasketDAO;
-import ru.pizza.restaurant.dto.order_basket.BasketOrderDTO;
-import ru.pizza.restaurant.dto.order_basket.ProductOrderDTO;
+import ru.pizza.restaurant.domain.dto.order_basket.BasketOrderDTO;
+import ru.pizza.restaurant.domain.dto.order_basket.ProductOrderDTO;
+import ru.pizza.restaurant.services.rest.RestOrderBasketService;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,11 +23,11 @@ class OrderBasketServiceTest {
     @Mock
     private OrderBasketDAO mockOrderBasketDAO;
 
-    private OrderBasketService orderBasketServiceUnderTest;
+    private RestOrderBasketService orderBasketServiceUnderTest;
 
     @BeforeEach
     void setUp() {
-        orderBasketServiceUnderTest = new OrderBasketService(mockOrderBasketDAO);
+        orderBasketServiceUnderTest = new RestOrderBasketService(mockOrderBasketDAO);
     }
 
     @Test

@@ -7,8 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.pizza.restaurant.dao.BuildingDAO;
 import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
-import ru.pizza.restaurant.entities.Building;
-import ru.pizza.restaurant.entities.Ingredient;
+import ru.pizza.restaurant.domain.entities.Building;
+import ru.pizza.restaurant.domain.entities.Ingredient;
+import ru.pizza.restaurant.services.rest.RestBuildingService;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,11 +26,11 @@ class BuildingServiceTest {
     @Mock
     private NewDeliveryBasketDAO mockNewDeliveryBasketDAO;
 
-    private BuildingService buildingServiceUnderTest;
+    private RestBuildingService buildingServiceUnderTest;
 
     @BeforeEach
     void setUp() {
-        buildingServiceUnderTest = new BuildingService(mockBuildingDAO, mockNewDeliveryBasketDAO);
+        buildingServiceUnderTest = new RestBuildingService(mockBuildingDAO, mockNewDeliveryBasketDAO);
     }
 
     @Test

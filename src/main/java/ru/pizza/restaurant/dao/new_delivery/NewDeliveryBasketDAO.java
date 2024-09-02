@@ -3,11 +3,11 @@ package ru.pizza.restaurant.dao.new_delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.global_parent.BasketMethodsDB;
-import ru.pizza.restaurant.dto.new_delivery.base.BasketDeliveryDTO;
-import ru.pizza.restaurant.dto.new_delivery.transfer.IngredientTransferDeliveryDTO;
-import ru.pizza.restaurant.entities.Building;
-import ru.pizza.restaurant.entities.Ingredient;
+import ru.pizza.restaurant.impl.BasketMethodsDB;
+import ru.pizza.restaurant.domain.dto.new_delivery.base.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.transfer.IngredientTransferDeliveryDTO;
+import ru.pizza.restaurant.domain.entities.Building;
+import ru.pizza.restaurant.domain.entities.Ingredient;
 import ru.pizza.restaurant.row_map.new_delivery.GetBasketDeliveryRowMap;
 
 import java.util.List;
@@ -41,7 +41,6 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
 
         for (IngredientTransferDeliveryDTO ingredient : ingredientList) {
             if (ingredient.isNew()) {
-                System.out.println(ingredient+"-"+buildingId);
                 jdbcTemplate.update("insert into warehouse (title, weight, building_id) values (?, ?, ?)",
                         ingredient.getTitle(),
                         ingredient.getWeight(),

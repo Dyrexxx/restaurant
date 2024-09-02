@@ -16,6 +16,8 @@ eureka:
       defaultZone: http://eureka:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+dima:
+  test: "1234"
 
 ---
 spring:

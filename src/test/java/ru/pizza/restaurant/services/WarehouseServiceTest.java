@@ -6,8 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.pizza.restaurant.dao.WarehouseDAO;
-import ru.pizza.restaurant.entities.Building;
-import ru.pizza.restaurant.entities.Ingredient;
+import ru.pizza.restaurant.domain.entities.Building;
+import ru.pizza.restaurant.domain.entities.Ingredient;
+import ru.pizza.restaurant.services.rest.RestWarehouseService;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,11 +23,11 @@ class WarehouseServiceTest {
     @Mock
     private WarehouseDAO mockWarehouseDAO;
 
-    private WarehouseService warehouseServiceUnderTest;
+    private RestWarehouseService warehouseServiceUnderTest;
 
     @BeforeEach
     void setUp() {
-        warehouseServiceUnderTest = new WarehouseService(mockWarehouseDAO);
+        warehouseServiceUnderTest = new RestWarehouseService(mockWarehouseDAO);
     }
 
     @Test

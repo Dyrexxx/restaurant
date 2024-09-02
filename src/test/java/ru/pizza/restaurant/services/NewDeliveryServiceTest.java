@@ -6,8 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
-import ru.pizza.restaurant.dto.new_delivery.base.BasketDeliveryDTO;
-import ru.pizza.restaurant.dto.new_delivery.base.IngredientDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.base.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.base.IngredientDeliveryDTO;
+import ru.pizza.restaurant.services.rest.RestNewDeliveryService;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,11 +23,11 @@ class NewDeliveryServiceTest {
     @Mock
     private NewDeliveryBasketDAO mockNewDeliveryBasketDAO;
 
-    private NewDeliveryService newDeliveryServiceUnderTest;
+    private RestNewDeliveryService newDeliveryServiceUnderTest;
 
     @BeforeEach
     void setUp() {
-        newDeliveryServiceUnderTest = new NewDeliveryService(mockNewDeliveryBasketDAO);
+        newDeliveryServiceUnderTest = new RestNewDeliveryService(mockNewDeliveryBasketDAO);
     }
 
     @Test
