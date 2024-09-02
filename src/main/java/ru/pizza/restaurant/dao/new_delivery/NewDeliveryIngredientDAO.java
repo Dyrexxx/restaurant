@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.pizza.restaurant.dao.BasketMethodsDB;
-import ru.pizza.restaurant.domain.dto.new_delivery.transfer.IngredientTransferDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.IngredientDeliveryDTO;
 import ru.pizza.restaurant.row_map.new_delivery.GetIngredientDeliveryRowMap;
 
 import java.util.List;
@@ -12,26 +12,26 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class NewDeliveryIngredientDAO implements BasketMethodsDB<IngredientTransferDeliveryDTO, String, String> {
+public class NewDeliveryIngredientDAO implements BasketMethodsDB<IngredientDeliveryDTO, String, String> {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<IngredientTransferDeliveryDTO> findAll() {
+    public List<IngredientDeliveryDTO> findAll() {
         return null;
     }
     @Override
-    public List<IngredientTransferDeliveryDTO> findAll(String id) {
+    public List<IngredientDeliveryDTO> findAll(String id) {
         String sql = "select i.title, i.weight, i.is_new, b.building_id from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where basket_id=?";
         return jdbcTemplate.query(sql, new GetIngredientDeliveryRowMap(), id);
     }
 
     @Override
-    public IngredientTransferDeliveryDTO findById(String id) {
+    public IngredientDeliveryDTO findById(String id) {
         return null;
     }
 
     @Override
-    public void save(IngredientTransferDeliveryDTO ingredientTransferDeliveryDTO) {
+    public void save(IngredientDeliveryDTO ingredientDeliveryDTO) {
 
     }
 

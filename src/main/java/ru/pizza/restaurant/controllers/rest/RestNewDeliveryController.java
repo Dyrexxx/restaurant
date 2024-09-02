@@ -2,7 +2,7 @@ package ru.pizza.restaurant.controllers.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.pizza.restaurant.domain.dto.new_delivery.base.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
 import ru.pizza.restaurant.services.rest.RestNewDeliveryService;
 
 import java.util.List;

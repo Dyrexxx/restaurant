@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
-import ru.pizza.restaurant.domain.dto.new_delivery.base.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
 import ru.pizza.restaurant.domain.entities.Building;
 import ru.pizza.restaurant.services.BaseMethodsBasketService;
 

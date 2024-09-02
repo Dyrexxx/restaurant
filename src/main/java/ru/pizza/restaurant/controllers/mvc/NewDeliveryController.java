@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.pizza.restaurant.domain.dto.new_delivery.transfer.BasketTransferDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.empty_id_model.BasketNewDeliveryIdDTO;
 import ru.pizza.restaurant.services.mvc.BuildingService;
 import ru.pizza.restaurant.services.mvc.NewDeliveryService;
 
@@ -26,7 +26,7 @@ public class NewDeliveryController {
     }
 
     @ModelAttribute("emptyDeliveryBasketId")
-    public BasketTransferDeliveryDTO emptyNewDeliveryBasket() {
-        return new BasketTransferDeliveryDTO();
+    public BasketNewDeliveryIdDTO emptyNewDeliveryBasket() {
+        return new BasketNewDeliveryIdDTO();
     }
 }

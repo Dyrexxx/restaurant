@@ -2,8 +2,8 @@ package ru.pizza.restaurant.row_map.new_delivery;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import ru.pizza.restaurant.domain.dto.new_delivery.base.BasketDeliveryDTO;
-import ru.pizza.restaurant.domain.dto.new_delivery.base.IngredientDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.IngredientDeliveryDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

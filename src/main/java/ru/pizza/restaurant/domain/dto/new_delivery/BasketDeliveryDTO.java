@@ -1,4 +1,4 @@
-package ru.pizza.restaurant.domain.dto.new_delivery.base;
+package ru.pizza.restaurant.domain.dto.new_delivery;
 
 import lombok.Data;
 

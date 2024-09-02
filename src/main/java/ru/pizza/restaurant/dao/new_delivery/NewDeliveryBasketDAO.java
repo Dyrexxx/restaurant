@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.pizza.restaurant.dao.BasketMethodsDB;
-import ru.pizza.restaurant.domain.dto.new_delivery.base.BasketDeliveryDTO;
-import ru.pizza.restaurant.domain.dto.new_delivery.transfer.IngredientTransferDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.IngredientDeliveryDTO;
 import ru.pizza.restaurant.domain.entities.Building;
 import ru.pizza.restaurant.domain.entities.Ingredient;
 import ru.pizza.restaurant.row_map.new_delivery.GetBasketDeliveryRowMap;
@@ -45,9 +45,9 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
 
     @Override
     public void update(int buildingId, String basketId) {
-        List<IngredientTransferDeliveryDTO> ingredientList = newDeliveryIngredientDAO.findAll(basketId);
+        List<IngredientDeliveryDTO> ingredientList = newDeliveryIngredientDAO.findAll(basketId);
 
-        for (IngredientTransferDeliveryDTO ingredient : ingredientList) {
+        for (IngredientDeliveryDTO ingredient : ingredientList) {
             if (ingredient.isNew()) {
                 jdbcTemplate.update("insert into warehouse (title, weight, building_id) values (?, ?, ?)",
                         ingredient.getTitle(),
