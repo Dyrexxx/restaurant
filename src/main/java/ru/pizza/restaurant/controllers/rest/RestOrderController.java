@@ -58,7 +58,7 @@ public class RestOrderController {
      */
     @Operation(summary = "Сохраняет онлайн-заказ и добавляет в очередь для приготовления")
     @ApiResponse(responseCode = "200", description = "Онлайн-заказ сохранен")
-    @PostMapping
+    @PostMapping("/orders")
     public void save(@RequestBody BasketOrderDTO basketOrderDTO) {
         orderBasketService.save(basketOrderDTO);
     }

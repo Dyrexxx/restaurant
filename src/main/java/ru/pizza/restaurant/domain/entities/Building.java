@@ -19,12 +19,15 @@ public class Building {
     @Column(name = "id")
     @Schema(description = "ID ресторана")
     private int id;
+
     @Column(name = "title")
     @Schema(description = "Название ресторана")
     private String title;
+
     @Column(name = "is_new_delivery")
     @Schema(description = "Проверка. Есть ли новые доставки в ресторан")
     private boolean isNewDelivery;
+
     @OneToMany(mappedBy = "building", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIdentityReference
     @Schema(description = "list склад ресторана")
