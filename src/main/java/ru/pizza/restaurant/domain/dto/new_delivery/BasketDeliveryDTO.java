@@ -1,5 +1,6 @@
 package ru.pizza.restaurant.domain.dto.new_delivery;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -7,8 +8,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
+@Schema(description = "dto для работы с корзиной доставки")
 public class BasketDeliveryDTO {
+    @Schema(description = "ID корзины")
     private String id;
+    @Schema(description = "list ингредиентов доставки")
     private List<IngredientDeliveryDTO> ingredientList = new ArrayList<>();
 
     @Override

@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: restaurant
+
   profiles:
     active: prod
   liquibase:
