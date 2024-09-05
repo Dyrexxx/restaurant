@@ -15,12 +15,20 @@ import java.util.List;
 public class RestBuildingService {
     private final BuildingDAO buildingDAO;
 
-
+    /**
+     *
+     *
+     * @return Возвращает все рестораны
+     */
     public List<Building> findAll() {
         return buildingDAO.findAll();
     }
 
-
+    /**
+     *
+     * @param id ID ресторана
+     * @return Возвращает определенный ресторан
+     */
     public Building findById(Integer id) {
         return buildingDAO.findById(id);
     }

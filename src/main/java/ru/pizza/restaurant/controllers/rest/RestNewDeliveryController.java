@@ -56,7 +56,12 @@ public class RestNewDeliveryController {
     }
 
 
-    @Operation(summary = "Добавляет в бд доставки список ингредиентов, которые уже в пути",
+    /***
+     * Сохраняет в базу данных ингредиенты, которые должны в скором времени приехать в рестораны
+     *
+     * @param newDelivery корзина новых ингредиентов
+     */
+    @Operation(summary = "Сохраняет в бд доставки список ингредиентов, которые уже в пути в ресторан",
             description = "Ожидание новых доставок")
     @ApiResponse(responseCode = "200", description = "Доставка в пути")
     @PostMapping("/deliveries")

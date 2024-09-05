@@ -28,11 +28,21 @@ public class RestOrderBasketService implements BaseMethodsBasketService<BasketOr
         return orderBasketDAO.findAll(id);
     }
 
+    /**
+     * Обновляет корзину онлайн заказов определенного ресторана
+     * @param buildingId ID ресторана
+     * @param id ID корзины онлайн заказа
+     */
     @Transactional
     public void update(int buildingId, String id) {
         orderBasketDAO.update(buildingId, id);
     }
 
+    /**
+     * Сохраняет онлайн-заказ
+     *
+     * @param basketOrderDTO онлайн-заказ
+     */
     @Transactional
     public void save(BasketOrderDTO basketOrderDTO) {
         orderBasketDAO.save(basketOrderDTO);

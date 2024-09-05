@@ -30,7 +30,7 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
     /***
      *
      * @param buildingId ID ресторана
-     * @return Возвращает все текущие доставки на ресторан
+     * @return Возвращает все текущие доставки на ресторан по его ID
      */
     @Override
     public List<BasketDeliveryDTO> findAll(Integer buildingId) {
@@ -45,6 +45,11 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
     }
 
 
+    /***
+     * Обновляет базу данных ресторана. Добавляет новые ингредиенты и обновляет количество старых
+     * @param buildingId ID ресторана
+     * @param basketId ID корзины
+     */
     @Override
     public void update(int buildingId, String basketId) {
         List<IngredientDeliveryDTO> ingredientList = newDeliveryIngredientDAO.findAll(basketId);
@@ -69,6 +74,13 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
     public void save(BasketDeliveryDTO basketDeliveryDTO) {
 
     }
+
+    /***
+     * Добавляет в базу данных доставки новую доставку. Создает корзину и заполняет ее.
+     * Корзина нужна для того, чтобы групировать несколько доставок на один ресторан
+     *
+     * @param newDeliveryDTO корзина доставки
+     */
     public void save(NewDeliveryDTO newDeliveryDTO) {
         for (NewDeliveryDTO.ItemDelivery itemDelivery : newDeliveryDTO.getDelivery()) {
             String basketId = UUID.randomUUID().toString();
@@ -83,6 +95,10 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
         }
     }
 
+    /***
+     * Удаляет корзину из базы данных доставки
+     * @param id ID корзины
+     */
     @Override
     public void deleteById(String id) {
         jdbcTemplate.update("delete from new_delivery_basket where id=?", id);

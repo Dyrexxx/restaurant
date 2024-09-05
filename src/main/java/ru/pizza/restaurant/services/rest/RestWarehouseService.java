@@ -15,6 +15,10 @@ import java.util.List;
 public class RestWarehouseService implements BaseMethodsService<Ingredient, Integer> {
     private final WarehouseDAO warehouseDAO;
 
+    /**
+     *
+     * @return Возвращает все склады всех ресторанов
+     */
     @Override
     public List<Ingredient> index() {
         return warehouseDAO.findAll();

@@ -16,17 +16,29 @@ import java.util.UUID;
 public class OrderBasketDAO implements BasketMethodsDB<BasketOrderDTO, String, Integer> {
     private final JdbcTemplate jdbcTemplate;
 
+    /***
+     * Возвращает все онлайн-заказы из всех ресторанов
+     * @return Возвращает все онлайн-заказы
+     */
     @Override
     public List<BasketOrderDTO> findAll() {
         String sql = "select o.id, o.fio, o.address,p.count, p.title, p.count from order_basket o join order_product p on o.id=p.order_basket_id";
         return jdbcTemplate.query(sql, new GetBasketOrderRowMap());
     }
+
+    /***
+     * Возвращает все онлайн-заказы ресторана по его ID
+     *
+     * @param id ID ресторана
+     * @return Онлайн-заказы для него
+     */
     @Override
     public List<BasketOrderDTO> findAll(Integer id) {
         String sql = "select o.id, o.fio, o.address, p.count, p.title, p.building_id from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
         return jdbcTemplate.query(sql, new GetBasketOrderRowMap(), id);
     }
 
+    // Не используется пока что. Нужен для подтверждения готовности заказа
     @Override
     public void update(int buildingId, String id) {
         jdbcTemplate.update("update order_product set is_ready = true where order_basket_id=? and building_id=?",
@@ -38,6 +50,12 @@ public class OrderBasketDAO implements BasketMethodsDB<BasketOrderDTO, String, I
         return null;
     }
 
+    /***
+     * Сохраняет онлайн-заказ пользователя. Создает корзину и добавляет в нее онлайн-заказ.
+     * Сделано это для того, чтобы распределить корзину онлайн-заказа по ресторанам.
+     *
+     * @param basketOrderDTO онлайн-заказ
+     */
     @Override
     public void save(BasketOrderDTO basketOrderDTO) {
         String orderId = String.valueOf(UUID.randomUUID());

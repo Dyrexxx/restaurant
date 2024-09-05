@@ -17,17 +17,33 @@ import java.util.List;
 public class RestNewDeliveryService implements BaseMethodsBasketService<BasketDeliveryDTO, Integer> {
     private final NewDeliveryBasketDAO newDeliveryBasketDAO;
 
+    /**
+     *
+     * @param id ID ресторана
+     * @return Возвращает все доставки, которые в пути, определенного ресторана
+     */
     @Override
     public List<BasketDeliveryDTO> index(Integer id) {
         return newDeliveryBasketDAO.findAll(id);
     }
 
+    /**
+     * Обновляет бд доставки. Если принять доставку, данные удаляться из бд доставки и сопоставяться
+     * с бд склада определенного ресторана
+     *
+     * @param buildingId ID ресторана
+     * @param id ID корзины
+     */
     @Transactional
     public void update(int buildingId, String id) {
         newDeliveryBasketDAO.update(buildingId, id);
     }
 
-
+    /**
+     * Сохраняет новую доставку, которая уже в пути, в бд ожидаемых доставок
+     *
+     * @param newDelivery данные доставки
+     */
     @Transactional
     public void save(NewDeliveryDTO newDelivery) {
         newDeliveryBasketDAO.save(newDelivery);

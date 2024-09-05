@@ -21,7 +21,7 @@ public class RestBuildingController {
 
     /***
      *
-     * @return возвращает список всех действующих ресторанов с их складами
+     * @return возвращает все рестораны
      */
     @Operation(summary = "Найти все рестораны", description = "Находит все рестораны")
     @ApiResponse(responseCode="200", description = "Все рестораны найдены")
@@ -33,7 +33,7 @@ public class RestBuildingController {
     /***
      *
      * @param id ID ресторана
-     * @return возвращает определенный ресторан
+     * @return возвращает определенный ресторан по ID
      */
     @Operation(summary = "Найти ресторан", description = "Находит 1 ресторан по ID")
     @ApiResponse(responseCode="200", description = "Ресторан найден")

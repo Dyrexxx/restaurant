@@ -19,6 +19,13 @@ public class NewDeliveryIngredientDAO implements BasketMethodsDB<IngredientDeliv
     public List<IngredientDeliveryDTO> findAll() {
         return null;
     }
+
+    /***
+     * Возвращает нужную корзину доставки
+     *
+     * @param id ID корзины
+     * @return Возвращает нужную корзину
+     */
     @Override
     public List<IngredientDeliveryDTO> findAll(String id) {
         String sql = "select i.title, i.weight, i.is_new, b.building_id from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where basket_id=?";
