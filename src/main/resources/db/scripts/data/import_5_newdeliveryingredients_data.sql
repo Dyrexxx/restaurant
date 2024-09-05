@@ -5,7 +5,7 @@ values ('Новый2', 600, 'order_1', TRUE);
 insert into new_delivery_ingredients(title, weight, basket_id, is_new)
 values ('Огурцы', 100, 'order_1', FALSE);
 insert into new_delivery_ingredients(title, weight, basket_id, is_new)
-values ('Сыр', 11100, 'order_1', FALSE);
+values ('Сыр', 1110000, 'order_1', FALSE);
 
 
 insert into new_delivery_ingredients(title, weight, basket_id, is_new)
