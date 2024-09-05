@@ -5,7 +5,7 @@ spring:
   application:
     name: restaurant
   profiles:
-    active: prod
+    active: dev
   mvc:
     hiddenmethod:
       filter:
@@ -20,30 +20,6 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
-
----
-spring:
-  config:
-    activate:
-      on-profile: test
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:/restaurant;MODE=PostgreSQL;
-    username: sa
-    password: password
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: none
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:db/scripts/data/import_*_data.sql
-eureka:
-  instance:
-    hostname: localhost
 
 ---
 spring:

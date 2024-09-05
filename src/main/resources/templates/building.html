@@ -8,9 +8,7 @@
 <body>
 <a th:href="@{/restaurant/orders/{id}(id=${building.id})}">Заказы</a>
 <div>
-    <div th:if="${building.isNewDelivery()}">
-        <a th:href="@{/restaurant/new-delivery/{id}(id=${building.id})}">Приехала доставка!!!!</a>
-    </div>
+    <a th:href="@{/restaurant/new-delivery/{id}(id=${building.id})}">Ожидание поставки</a>
 </div>
 <h1 style="align-content: center" th:text="${building.getTitle()} + '  - CКЛАД'"></h1>
 <table class="table table-striped">
