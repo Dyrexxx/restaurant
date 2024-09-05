@@ -7,10 +7,10 @@
 </head>
 <body>
 <div>
-    <form method="post"
-          th:action="@{/dodo{id}/accept-delivery/{basketId}(id=${building.id}, basketId=${newDelivery.id})}"
-          th:object="${emptyDeliveryBasketId}"
-          th:each="newDelivery, j : ${newDeliveryList}">
+    <form th:method="PATCH"
+          th:action="@{/restaurant/api/deliveries/{buildingId}/{basketId}(buildingId=${building.id}, basketId=${newDelivery.id})}"
+          th:each="newDelivery, j : ${newDeliveryList}"
+          th:object="${emptyDeliveryBasketId}">
         <input type="hidden" th:value="${newDelivery}" name="id">
         <h1 th:text="'Доставка №'+${j.index+1}"></h1>
         <table class="table table-striped">

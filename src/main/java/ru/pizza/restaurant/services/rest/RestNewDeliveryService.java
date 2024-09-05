@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
 import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
 import ru.pizza.restaurant.domain.entities.Building;
 import ru.pizza.restaurant.services.BaseMethodsBasketService;
 
@@ -28,7 +29,7 @@ public class RestNewDeliveryService implements BaseMethodsBasketService<BasketDe
 
 
     @Transactional
-    public void save(List<Building> buildings) {
-        newDeliveryBasketDAO.save(buildings);
+    public void save(NewDeliveryDTO newDelivery) {
+        newDeliveryBasketDAO.save(newDelivery);
     }
 }

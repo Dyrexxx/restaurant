@@ -4,9 +4,12 @@ server:
 spring:
   application:
     name: restaurant
-
   profiles:
     active: prod
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   liquibase:
     change-log: classpath:db/migrations/changeLog.xml
 eureka:

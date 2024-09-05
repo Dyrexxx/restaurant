@@ -42,17 +42,4 @@ public class RestBuildingController {
         return restBuildingService.findById(id);
     }
 
-    /***
-     * Получает список ресторанов со списком новых ингредиентов, которые обновят текущее количество запасов на складе.
-     * Если какого-то ингредиента нет на складе, то он добавляется. Если есть, то обновляется количество
-     *
-     * @param buildings рестораны в которые привезут пополнение запасов
-     */
-    @Operation(summary = "Пополнить запасы ресторанов",
-            description = "Пополняет запасы складов нужных ресторанов, где были сформированны доставки из main-warehouse")
-    @ApiResponse(responseCode="200", description = "Доставка в пути")
-    @PatchMapping("/buildings")
-    public void waitingForDelivery(@RequestBody List<Building> buildings) {
-        restBuildingService.updateOrSave(buildings);
-    }
 }
