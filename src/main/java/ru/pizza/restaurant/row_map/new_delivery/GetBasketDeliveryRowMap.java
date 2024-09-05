@@ -2,8 +2,8 @@ package ru.pizza.restaurant.row_map.new_delivery;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import ru.pizza.restaurant.dto.new_delivery.base.BasketDeliveryDTO;
-import ru.pizza.restaurant.dto.new_delivery.base.IngredientDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.new_delivery.IngredientDeliveryDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +24,7 @@ public class GetBasketDeliveryRowMap implements ResultSetExtractor<List<BasketDe
             IngredientDeliveryDTO ingredientDeliveryDTO = new IngredientDeliveryDTO() {{
                 setTitle(r.getString("title"));
                 setWeight(r.getInt("weight"));
+                setNew(r.getBoolean("is_new"));
             }};
             //TODO возможный рефакторинг(повторение кода)
             if (!basketDeliveryList.contains(basketDeliveryDTO)) {

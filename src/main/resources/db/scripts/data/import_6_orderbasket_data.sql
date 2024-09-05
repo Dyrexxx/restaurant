@@ -1,0 +1,1 @@
+insert into order_basket values ('basket_1', 'Дмитрий Утин', 'г.Пенза');

@@ -3,8 +3,8 @@ package ru.pizza.restaurant.row_map.order_basket;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.dto.order_basket.BasketOrderDTO;
-import ru.pizza.restaurant.dto.order_basket.ProductOrderDTO;
+import ru.pizza.restaurant.domain.dto.order_basket.BasketOrderDTO;
+import ru.pizza.restaurant.domain.dto.order_basket.ProductOrderDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
