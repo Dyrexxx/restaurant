@@ -15,6 +15,7 @@ spring:
 eureka:
   instance:
     prefer-ip-address: true
+    hostname: localhost
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
@@ -48,9 +49,6 @@ spring:
         - classpath:db/scripts/data/import_6_orderbasket_data.sql
         - classpath:db/scripts/data/import_7_orderproduct_data.sql
         - classpath:db/scripts/data/import_8_orderproductingredient_data.sql
-eureka:
-  instance:
-    hostname: localhost
 
 ---
 spring:
@@ -66,6 +64,3 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-eureka:
-  instance:
-    hostname: eureka
