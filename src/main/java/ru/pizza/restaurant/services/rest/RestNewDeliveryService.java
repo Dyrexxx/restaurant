@@ -2,6 +2,7 @@ package ru.pizza.restaurant.services.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
 import ru.pizza.restaurant.domain.dto.response.new_delivery.BasketDeliveryDTO;
@@ -13,13 +14,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestNewDeliveryService {
     private final NewDeliveryBasketDAO newDeliveryBasketDAO;
-
     /**
      *
      * @param id ID ресторана
      * @return Возвращает все доставки, которые в пути, определенного ресторана
      */
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<BasketDeliveryDTO> index(Integer id) {
         return newDeliveryBasketDAO.findAll(id);
     }
@@ -31,7 +31,7 @@ public class RestNewDeliveryService {
      * @param buildingId ID ресторана
      * @param id ID корзины
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void update(int buildingId, String id) {
         newDeliveryBasketDAO.update(buildingId, id);
     }
@@ -41,7 +41,7 @@ public class RestNewDeliveryService {
      *
      * @param newDeliveryList данные доставки
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void save(List<NewDeliveryDTO> newDeliveryList) {
         newDeliveryBasketDAO.save(newDeliveryList);
     }

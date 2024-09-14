@@ -2,6 +2,7 @@ package ru.pizza.restaurant.services.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.order_basket.OrderBasketDAO;
 import ru.pizza.restaurant.domain.dto.response.order_basket.BasketOrderDTO;
@@ -15,12 +16,12 @@ import java.util.List;
 public class RestOrderBasketService {
     private final OrderBasketDAO orderBasketDAO;
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<BasketOrderDTO> index() {
         return orderBasketDAO.findAll();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<BasketOrderDTO> index(Integer id) {
         return orderBasketDAO.findAll(id);
     }
@@ -30,7 +31,7 @@ public class RestOrderBasketService {
      * @param buildingId ID ресторана
      * @param id ID корзины онлайн заказа
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void update(int buildingId, String id) throws UnsupportedOperationException{
         orderBasketDAO.update(buildingId, id);
     }
@@ -40,7 +41,7 @@ public class RestOrderBasketService {
      *
      * @param basketOrderDTO онлайн-заказ
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void save(BasketOrderDTO basketOrderDTO) {
         orderBasketDAO.save(basketOrderDTO);
     }
