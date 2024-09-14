@@ -11,10 +11,9 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class OrderBasketService implements BaseMethodsBasketService<BasketOrderDTO, Integer> {
+public class OrderBasketService {
     private final RestTemplate restTemplate;
 
-    @Override
     public List<BasketOrderDTO> index(Integer id) {
         return List.of(restTemplate.getForObject("http://RESTAURANT/restaurant/api/orders/{id}", BasketOrderDTO[].class, id));
     }
