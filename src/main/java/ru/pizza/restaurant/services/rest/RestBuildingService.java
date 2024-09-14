@@ -11,13 +11,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class RestBuildingService {
     private final BuildingDAO buildingDAO;
 
     /**
      * @return Возвращает все рестораны
      */
+    @Transactional(readOnly = true)
     public List<Building> findAll() {
         return buildingDAO.findAll();
     }
@@ -26,6 +26,7 @@ public class RestBuildingService {
      * @param id ID ресторана
      * @return Возвращает определенный ресторан
      */
+    @Transactional(readOnly = true)
     public Building findById(Integer id) {
         return buildingDAO.findById(id);
     }

@@ -9,7 +9,6 @@ import ru.pizza.restaurant.domain.entities.Ingredient;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class RestWarehouseService{
     private final WarehouseDAO warehouseDAO;
@@ -17,6 +16,7 @@ public class RestWarehouseService{
     /**
      * @return Возвращает все склады всех ресторанов
      */
+    @Transactional(readOnly = true)
     public List<Ingredient> index() {
         return warehouseDAO.findAll();
     }

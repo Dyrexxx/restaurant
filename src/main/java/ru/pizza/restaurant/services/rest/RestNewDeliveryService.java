@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
-import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.response.new_delivery.BasketDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
 
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class RestNewDeliveryService {
     private final NewDeliveryBasketDAO newDeliveryBasketDAO;
@@ -20,6 +19,7 @@ public class RestNewDeliveryService {
      * @param id ID ресторана
      * @return Возвращает все доставки, которые в пути, определенного ресторана
      */
+    @Transactional(readOnly = true)
     public List<BasketDeliveryDTO> index(Integer id) {
         return newDeliveryBasketDAO.findAll(id);
     }
