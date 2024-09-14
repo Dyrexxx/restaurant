@@ -7,13 +7,16 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * сущность для работы с ресторанами
+ */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "building")
-@Schema(description = "jpa model для работы с ресторанами")
+@Schema(description = "сущность для работы с ресторанами")
 public class Building {
     @Id
     @Column(name = "id")

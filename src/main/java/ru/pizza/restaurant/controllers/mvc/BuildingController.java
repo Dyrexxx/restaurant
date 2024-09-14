@@ -13,13 +13,29 @@ import ru.pizza.restaurant.services.mvc.BuildingService;
 @RequestMapping("/restaurant")
 @RequiredArgsConstructor
 public class BuildingController {
+    /**
+     * {@link BuildingController#buildingService}
+     * сервис для ресторанов
+     */
     private final BuildingService buildingService;
 
+    /**
+     *
+     * @param model объекты в thymeleaf
+     * @return html страницу
+     */
     @GetMapping
     public String index(Model model) {
         model.addAttribute("buildingList", buildingService.index());
         return "index";
     }
+
+    /**
+     *
+     * @param buildingId ID ресторана
+     * @param model объекты в thymeleaf
+     * @return html страницу
+     */
     @GetMapping("/{buildingId}")
     public String getBuilding(@PathVariable int buildingId, Model model) {
         model.addAttribute("building", buildingService.findById(buildingId));

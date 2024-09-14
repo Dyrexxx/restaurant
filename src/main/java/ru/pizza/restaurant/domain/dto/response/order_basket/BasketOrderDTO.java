@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * dto для работы с корзиной онлайн-заказов
+ */
 @Data
 @Schema(description = "dto для работы с корзиной онлайн-заказов")
 public class BasketOrderDTO {

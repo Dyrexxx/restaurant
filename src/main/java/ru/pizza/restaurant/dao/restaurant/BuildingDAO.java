@@ -14,8 +14,16 @@ import java.util.NoSuchElementException;
 @Component
 @RequiredArgsConstructor
 public class BuildingDAO {
+    /**
+     * {@link BuildingDAO#buildingRepository}
+     * репозиторий для ресторанов
+     */
     private final BuildingRepository buildingRepository;
 
+    /**
+     *
+     * @return все рестораны
+     */
     public List<Building> findAll() {
         List<Building> buildingList = buildingRepository.findAll();
         if (buildingList.isEmpty()) {
@@ -24,6 +32,11 @@ public class BuildingDAO {
         return buildingList;
     }
 
+    /**
+     *
+     * @param id ID ресторана
+     * @return определенный ресторан
+     */
     public Building findById(Integer id) {
         return buildingRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ресторан не найден"));

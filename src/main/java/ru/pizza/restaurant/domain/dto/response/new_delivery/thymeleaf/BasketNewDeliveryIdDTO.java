@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /***
+ * {@link BasketNewDeliveryIdDTO}
  * dto для получения ID в thymeleaf
  */
 @Data

@@ -21,6 +21,10 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class NewDeliveryBasketDAO {
+    /**
+     * {@link NewDeliveryBasketDAO#newDeliveryIngredientDAO}
+     * dao для работы с бд в доставке новых ингредиентов
+     */
     private final NewDeliveryIngredientDAO newDeliveryIngredientDAO;
     private final JdbcTemplate jdbcTemplate;
     private final PlatformTransactionManager transactionManager;

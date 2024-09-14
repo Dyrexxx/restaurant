@@ -12,9 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/restaurant/api")
-@Tag(name="RestOrderController", description = "API для работы с онлайн-заказами")
+@Tag(name = "RestOrderController", description = "API для работы с онлайн-заказами")
 @RequiredArgsConstructor
 public class RestOrderController {
+    /**
+     * {@link RestOrderController#orderBasketService}
+     * сервис для работы в контроллере онлайн-заказов, пришедших из мкс Site
+     */
     private final RestOrderBasketService orderBasketService;
 
     /***
@@ -47,7 +51,8 @@ public class RestOrderController {
     @Operation(summary = "Ресторан подтверждает, что заказ готов и нуждается в доставке")
     @ApiResponse(responseCode = "200", description = "Заказ обработан")
     @PatchMapping("/orders/{buildingId}/{orderId}")
-    public void prepareOrder(@PathVariable int buildingId, @PathVariable String orderId) throws UnsupportedOperationException{
+    public void prepareOrder(@PathVariable int buildingId, @PathVariable String orderId)
+            throws UnsupportedOperationException {
 
     }
 

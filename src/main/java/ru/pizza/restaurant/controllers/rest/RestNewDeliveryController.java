@@ -18,6 +18,10 @@ import java.util.List;
 @Tag(name = "RestNewDeliveryController", description = "API для работы с доставкой")
 @RequiredArgsConstructor
 public class RestNewDeliveryController {
+    /**
+     * {@link RestNewDeliveryController#restNewDeliveryService}
+     * сервис для работы в контроллере доставок из main-warehouse
+     */
     private final RestNewDeliveryService restNewDeliveryService;
 
     /***

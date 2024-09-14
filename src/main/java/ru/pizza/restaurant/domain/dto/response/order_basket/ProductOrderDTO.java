@@ -6,6 +6,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * dto для продукции онлайн-заказа
+ */
 @Data
 public class ProductOrderDTO {
     @Schema(description = "Название продукта")

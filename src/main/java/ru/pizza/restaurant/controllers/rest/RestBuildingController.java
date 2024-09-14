@@ -17,7 +17,10 @@ import java.util.List;
 @Tag(name = "RestBuildingController", description = "API для работы с ресторанами")
 @RequiredArgsConstructor
 public class RestBuildingController {
-
+    /**
+     * {@link RestBuildingController#restBuildingService}
+     * Сервис для работы в контроллере ресторанов
+     */
     private final RestBuildingService restBuildingService;
 
     /***

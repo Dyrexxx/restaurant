@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import ru.pizza.restaurant.domain.dto.response.restaurant.one.BuildingDTO;
-import ru.pizza.restaurant.domain.entities.Building;
 
 import java.util.List;
 
