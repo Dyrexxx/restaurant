@@ -15,6 +15,8 @@ import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.IngredientFrom
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
 import ru.pizza.restaurant.row_map.new_delivery.GetBasketDeliveryRowMap;
 
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,18 +62,36 @@ public class NewDeliveryBasketDAO {
                     if (ingredientList.isEmpty()) {
                         throw new IllegalStateException("Корзина пуста");
                     }
+                    List<IngredientDeliveryDTO> listInsert = new ArrayList<>();
+                    List<IngredientDeliveryDTO> listUpdate = new ArrayList<>();
                     for (IngredientDeliveryDTO ingredient : ingredientList) {
                         if (ingredient.isNew()) {
-                            jdbcTemplate.update("insert into warehouse (title, weight, building_id) values (?, ?, ?)",
-                                    ingredient.getTitle(),
-                                    ingredient.getWeight(),
-                                    buildingId);
+                            listInsert.add(ingredient);
                         } else {
-                            jdbcTemplate.update(
-                                    "update warehouse set weight = weight+? where building_id = ? and title = ?",
-                                    ingredient.getWeight(), buildingId, ingredient.getTitle());
+                            listUpdate.add(ingredient);
                         }
                     }
+
+                    jdbcTemplate.batchUpdate("insert into warehouse (title, weight, building_id) values (?, ?, ?)",
+                            listInsert,
+                            100,
+                            (PreparedStatement ps, IngredientDeliveryDTO ingredient) -> {
+                                ps.setString(1, ingredient.getTitle());
+                                ps.setInt(2, ingredient.getWeight());
+                                ps.setInt(3, buildingId);
+                            }
+                    );
+                    jdbcTemplate.batchUpdate(
+                            "update warehouse set weight = weight+? where building_id = ? and title = ?",
+                            listUpdate,
+                            100,
+                            (PreparedStatement ps, IngredientDeliveryDTO ingredient) -> {
+                                ps.setInt(1, ingredient.getWeight());
+                                ps.setInt(2, buildingId);
+                                ps.setString(3, ingredient.getTitle());
+                            }
+                    );
+
                     deleteById(basketId);
                 }
             });
