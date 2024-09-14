@@ -58,6 +58,7 @@ public class OrderBasketDAO {
      * @param buildingId ID ресторана
      * @param id         ID корзины
      */
+    //TODO полностью переделать метод и бд под него
     public void update(int buildingId, String id) throws UnsupportedOperationException {
         try {
             jdbcTemplate.update("update order_product set is_ready = true where order_basket_id=? and building_id=?",

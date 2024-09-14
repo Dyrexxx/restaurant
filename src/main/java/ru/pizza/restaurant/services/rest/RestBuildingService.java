@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.restaurant.BuildingDAO;
-import ru.pizza.restaurant.domain.entities.Building;
+import ru.pizza.restaurant.domain.dto.response.restaurant.all.BuildingWithoutWarehouseForAllBuildingListDTO;
+import ru.pizza.restaurant.domain.dto.response.restaurant.one.BuildingDTO;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class RestBuildingService {
      * @return Возвращает все рестораны
      */
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
-    public List<Building> findAll() {
+    public List<BuildingWithoutWarehouseForAllBuildingListDTO> findAll() {
         return buildingDAO.findAll();
     }
 
@@ -28,7 +29,7 @@ public class RestBuildingService {
      * @return Возвращает определенный ресторан
      */
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
-    public Building findById(Integer id) {
+    public BuildingDTO findById(Integer id) {
         return buildingDAO.findById(id);
     }
 }
