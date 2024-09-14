@@ -6,15 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.new_delivery.NewDeliveryBasketDAO;
 import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
-import ru.pizza.restaurant.domain.entities.Building;
-import ru.pizza.restaurant.services.BaseMethodsBasketService;
 
 import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class RestNewDeliveryService implements BaseMethodsBasketService<BasketDeliveryDTO, Integer> {
+public class RestNewDeliveryService {
     private final NewDeliveryBasketDAO newDeliveryBasketDAO;
 
     /**
@@ -22,7 +20,6 @@ public class RestNewDeliveryService implements BaseMethodsBasketService<BasketDe
      * @param id ID ресторана
      * @return Возвращает все доставки, которые в пути, определенного ресторана
      */
-    @Override
     public List<BasketDeliveryDTO> index(Integer id) {
         return newDeliveryBasketDAO.findAll(id);
     }
@@ -42,10 +39,10 @@ public class RestNewDeliveryService implements BaseMethodsBasketService<BasketDe
     /**
      * Сохраняет новую доставку, которая уже в пути, в бд ожидаемых доставок
      *
-     * @param newDelivery данные доставки
+     * @param newDeliveryList данные доставки
      */
     @Transactional
-    public void save(NewDeliveryDTO newDelivery) {
-        newDeliveryBasketDAO.save(newDelivery);
+    public void save(List<NewDeliveryDTO> newDeliveryList) {
+        newDeliveryBasketDAO.save(newDeliveryList);
     }
 }

@@ -3,13 +3,10 @@ package ru.pizza.restaurant.dao.new_delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.dao.BasketMethodsDB;
 import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.new_delivery.IngredientDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.IngredientFromMainWarehouseDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
-import ru.pizza.restaurant.domain.entities.Building;
-import ru.pizza.restaurant.domain.entities.Ingredient;
 import ru.pizza.restaurant.row_map.new_delivery.GetBasketDeliveryRowMap;
 
 import java.util.List;
@@ -17,31 +14,18 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, String, Integer> {
+public class NewDeliveryBasketDAO {
     private final NewDeliveryIngredientDAO newDeliveryIngredientDAO;
     private final JdbcTemplate jdbcTemplate;
-
-    //Пригодится. В main-warehouse организовать отслеживание доставки нового привоза
-    @Override
-    public List<BasketDeliveryDTO> findAll() {
-        return null;
-    }
 
     /***
      *
      * @param buildingId ID ресторана
      * @return Возвращает все текущие доставки на ресторан по его ID
      */
-    @Override
     public List<BasketDeliveryDTO> findAll(Integer buildingId) {
         String sql = "SELECT b.id, i.title, i.weight, i.is_new FROM new_delivery_basket b JOIN new_delivery_ingredients i ON b.id=i.basket_id WHERE b.building_id=?";
         return jdbcTemplate.query(sql, new GetBasketDeliveryRowMap(), buildingId);
-    }
-
-    //Возможно пригодится
-    @Override
-    public BasketDeliveryDTO findById(String id) {
-        return null;
     }
 
 
@@ -50,7 +34,6 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
      * @param buildingId ID ресторана
      * @param basketId ID корзины
      */
-    @Override
     public void update(int buildingId, String basketId) {
         List<IngredientDeliveryDTO> ingredientList = newDeliveryIngredientDAO.findAll(basketId);
 
@@ -70,19 +53,14 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
         this.deleteById(basketId);
     }
 
-    @Override
-    public void save(BasketDeliveryDTO basketDeliveryDTO) {
-
-    }
-
     /***
      * Добавляет в базу данных доставки новую доставку. Создает корзину и заполняет ее.
      * Корзина нужна для того, чтобы групировать несколько доставок на один ресторан
      *
-     * @param newDeliveryDTO корзина доставки
+     * @param newDeliveryListDTO корзина доставки
      */
-    public void save(NewDeliveryDTO newDeliveryDTO) {
-        for (NewDeliveryDTO.ItemDelivery itemDelivery : newDeliveryDTO.getDelivery()) {
+    public void save(List<NewDeliveryDTO> newDeliveryListDTO) {
+        for (NewDeliveryDTO itemDelivery : newDeliveryListDTO) {
             String basketId = UUID.randomUUID().toString();
             jdbcTemplate.update("insert into new_delivery_basket(id, building_id) VALUES (?,?)", basketId, itemDelivery.getBuilding().getId());
             for (IngredientFromMainWarehouseDTO ingredient : itemDelivery.getIngredientList()) {
@@ -99,7 +77,6 @@ public class NewDeliveryBasketDAO implements BasketMethodsDB<BasketDeliveryDTO, 
      * Удаляет корзину из базы данных доставки
      * @param id ID корзины
      */
-    @Override
     public void deleteById(String id) {
         jdbcTemplate.update("delete from new_delivery_basket where id=?", id);
     }

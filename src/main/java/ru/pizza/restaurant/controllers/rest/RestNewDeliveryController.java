@@ -59,13 +59,13 @@ public class RestNewDeliveryController {
     /***
      * Сохраняет в базу данных ингредиенты, которые должны в скором времени приехать в рестораны
      *
-     * @param newDelivery корзина новых ингредиентов
+     * @param newDeliveryList корзина новых ингредиентов
      */
     @Operation(summary = "Сохраняет в бд доставки список ингредиентов, которые уже в пути в ресторан",
             description = "Ожидание новых доставок")
     @ApiResponse(responseCode = "200", description = "Доставка в пути")
     @PostMapping("/deliveries")
-    public void expectationNewDelivery(@RequestBody NewDeliveryDTO newDelivery) {
-        restNewDeliveryService.save(newDelivery);
+    public void expectationNewDelivery(@RequestBody List<NewDeliveryDTO> newDeliveryList) {
+        restNewDeliveryService.save(newDeliveryList);
     }
 }
