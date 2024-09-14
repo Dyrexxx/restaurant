@@ -1,10 +1,16 @@
 package ru.pizza.restaurant.dao.new_delivery;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
-import ru.pizza.restaurant.domain.dto.new_delivery.IngredientDeliveryDTO;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
+import ru.pizza.restaurant.domain.dto.response.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.response.new_delivery.IngredientDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.IngredientFromMainWarehouseDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
 import ru.pizza.restaurant.row_map.new_delivery.GetBasketDeliveryRowMap;
@@ -17,6 +23,7 @@ import java.util.UUID;
 public class NewDeliveryBasketDAO {
     private final NewDeliveryIngredientDAO newDeliveryIngredientDAO;
     private final JdbcTemplate jdbcTemplate;
+    private final PlatformTransactionManager transactionManager;
 
     /***
      *
@@ -25,7 +32,11 @@ public class NewDeliveryBasketDAO {
      */
     public List<BasketDeliveryDTO> findAll(Integer buildingId) {
         String sql = "SELECT b.id, i.title, i.weight, i.is_new FROM new_delivery_basket b JOIN new_delivery_ingredients i ON b.id=i.basket_id WHERE b.building_id=?";
-        return jdbcTemplate.query(sql, new GetBasketDeliveryRowMap(), buildingId);
+        List<BasketDeliveryDTO> basketDeliveryDTOS = jdbcTemplate.query(sql, new GetBasketDeliveryRowMap(), buildingId);
+        if (basketDeliveryDTOS == null || basketDeliveryDTOS.isEmpty()) {
+            throw new RuntimeException("Корзина пуста или не существует");
+        }
+        return basketDeliveryDTOS;
     }
 
 
@@ -35,22 +46,34 @@ public class NewDeliveryBasketDAO {
      * @param basketId ID корзины
      */
     public void update(int buildingId, String basketId) {
-        List<IngredientDeliveryDTO> ingredientList = newDeliveryIngredientDAO.findAll(basketId);
-
-        for (IngredientDeliveryDTO ingredient : ingredientList) {
-            if (ingredient.isNew()) {
-                jdbcTemplate.update("insert into warehouse (title, weight, building_id) values (?, ?, ?)",
-                        ingredient.getTitle(),
-                        ingredient.getWeight(),
-                        buildingId);
-            } else {
-                jdbcTemplate.update(
-                        "update warehouse set weight = weight+? where building_id = ? and title = ?",
-                        ingredient.getWeight(), buildingId, ingredient.getTitle());
-            }
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        try {
+            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                @Override
+                protected void doInTransactionWithoutResult(@NonNull TransactionStatus status) {
+                    List<IngredientDeliveryDTO> ingredientList = newDeliveryIngredientDAO.findAll(basketId);
+                    if (ingredientList.isEmpty()) {
+                        throw new IllegalStateException("Корзина пуста");
+                    }
+                    for (IngredientDeliveryDTO ingredient : ingredientList) {
+                        if (ingredient.isNew()) {
+                            jdbcTemplate.update("insert into warehouse (title, weight, building_id) values (?, ?, ?)",
+                                    ingredient.getTitle(),
+                                    ingredient.getWeight(),
+                                    buildingId);
+                        } else {
+                            jdbcTemplate.update(
+                                    "update warehouse set weight = weight+? where building_id = ? and title = ?",
+                                    ingredient.getWeight(), buildingId, ingredient.getTitle());
+                        }
+                    }
+                    deleteById(basketId);
+                }
+            });
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Сбой при выполнении", e);
         }
-
-        this.deleteById(basketId);
     }
 
     /***
@@ -60,16 +83,28 @@ public class NewDeliveryBasketDAO {
      * @param newDeliveryListDTO корзина доставки
      */
     public void save(List<NewDeliveryDTO> newDeliveryListDTO) {
-        for (NewDeliveryDTO itemDelivery : newDeliveryListDTO) {
-            String basketId = UUID.randomUUID().toString();
-            jdbcTemplate.update("insert into new_delivery_basket(id, building_id) VALUES (?,?)", basketId, itemDelivery.getBuilding().getId());
-            for (IngredientFromMainWarehouseDTO ingredient : itemDelivery.getIngredientList()) {
-                jdbcTemplate.update("insert into new_delivery_ingredients (title, weight, is_new, basket_id) values (?, ?, ?, ?)",
-                        ingredient.getTitle(),
-                        ingredient.getWeight(),
-                        ingredient.isNew(),
-                        basketId);
-            }
+        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        try {
+            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                @Override
+                protected void doInTransactionWithoutResult(@NonNull TransactionStatus status) {
+                    if (newDeliveryListDTO.isEmpty()) throw new IllegalStateException("Корзина пуста");
+                    for (NewDeliveryDTO itemDelivery : newDeliveryListDTO) {
+                        String basketId = UUID.randomUUID().toString();
+                        jdbcTemplate.update("insert into new_delivery_basket(id, building_id) VALUES (?,?)", basketId, itemDelivery.getBuilding().getId());
+                        for (IngredientFromMainWarehouseDTO ingredient : itemDelivery.getIngredientList()) {
+                            jdbcTemplate.update("insert into new_delivery_ingredients (title, weight, is_new, basket_id) values (?, ?, ?, ?)",
+                                    ingredient.getTitle(),
+                                    ingredient.getWeight(),
+                                    ingredient.isNew(),
+                                    basketId);
+                        }
+                    }
+                }
+            });
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Сбой", e);
         }
     }
 
@@ -78,6 +113,10 @@ public class NewDeliveryBasketDAO {
      * @param id ID корзины
      */
     public void deleteById(String id) {
-        jdbcTemplate.update("delete from new_delivery_basket where id=?", id);
+        try {
+            jdbcTemplate.update("delete from new_delivery_basket where id=?", id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Нет такой доставки", e);
+        }
     }
 }
