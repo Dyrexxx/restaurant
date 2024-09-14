@@ -6,11 +6,6 @@ import java.util.List;
 
 @Data
 public class NewDeliveryDTO {
-    private List<ItemDelivery> delivery;
-
-    @Data
-    public static class ItemDelivery {
-        private BuildingFromMainWarehouseDTO building;
-        private List<IngredientFromMainWarehouseDTO> ingredientList;
-    }
+    private BuildingFromMainWarehouseDTO building;
+    private List<IngredientFromMainWarehouseDTO> ingredientList;
 }
