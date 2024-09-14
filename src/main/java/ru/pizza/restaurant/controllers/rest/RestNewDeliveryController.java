@@ -5,18 +5,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.response.new_delivery.BasketDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
-import ru.pizza.restaurant.domain.entities.Building;
 import ru.pizza.restaurant.services.rest.RestNewDeliveryService;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-import ru.pizza.restaurant.domain.dto.order_basket.BasketOrderDTO;
+import ru.pizza.restaurant.domain.dto.response.order_basket.BasketOrderDTO;
 
 import java.util.List;
 

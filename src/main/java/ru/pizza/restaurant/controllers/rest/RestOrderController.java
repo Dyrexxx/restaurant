@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.pizza.restaurant.domain.dto.order_basket.BasketOrderDTO;
+import ru.pizza.restaurant.domain.dto.response.order_basket.BasketOrderDTO;
 import ru.pizza.restaurant.services.rest.RestOrderBasketService;
 
 import java.util.List;
@@ -47,8 +47,8 @@ public class RestOrderController {
     @Operation(summary = "Ресторан подтверждает, что заказ готов и нуждается в доставке")
     @ApiResponse(responseCode = "200", description = "Заказ обработан")
     @PatchMapping("/orders/{buildingId}/{orderId}")
-    public void prepareOrder(@PathVariable int buildingId, @PathVariable String orderId) {
-        orderBasketService.update(buildingId, orderId);
+    public void prepareOrder(@PathVariable int buildingId, @PathVariable String orderId) throws UnsupportedOperationException{
+
     }
 
     /***

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.pizza.restaurant.domain.dto.new_delivery.empty_id_model.BasketNewDeliveryIdDTO;
+import ru.pizza.restaurant.domain.dto.response.new_delivery.thymeleaf.BasketNewDeliveryIdDTO;
 import ru.pizza.restaurant.services.mvc.BuildingService;
 import ru.pizza.restaurant.services.mvc.NewDeliveryService;
 

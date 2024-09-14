@@ -1,4 +1,4 @@
-package ru.pizza.restaurant.domain.dto.order_basket;
+package ru.pizza.restaurant.domain.dto.response.order_basket;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

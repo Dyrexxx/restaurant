@@ -1,10 +1,9 @@
 package ru.pizza.restaurant.services.mvc;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.pizza.restaurant.domain.dto.new_delivery.BasketDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.response.new_delivery.BasketDeliveryDTO;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package ru.pizza.restaurant.row_map.new_delivery;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import ru.pizza.restaurant.domain.dto.new_delivery.IngredientDeliveryDTO;
+import ru.pizza.restaurant.domain.dto.response.new_delivery.IngredientDeliveryDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

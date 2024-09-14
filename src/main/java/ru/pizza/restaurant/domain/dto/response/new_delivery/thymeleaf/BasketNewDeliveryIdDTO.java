@@ -1,4 +1,4 @@
-package ru.pizza.restaurant.domain.dto.new_delivery.empty_id_model;
+package ru.pizza.restaurant.domain.dto.response.new_delivery.thymeleaf;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
