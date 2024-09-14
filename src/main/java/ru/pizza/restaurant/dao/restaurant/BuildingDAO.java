@@ -15,18 +15,17 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class BuildingDAO {
     private final BuildingRepository buildingRepository;
-    private final BuildingMapper buildingMapper;
 
-    public List<BuildingWithoutWarehouseForAllBuildingListDTO> findAll() {
+    public List<Building> findAll() {
         List<Building> buildingList = buildingRepository.findAll();
         if (buildingList.isEmpty()) {
             throw new NoSuchElementException("Рестораны не найдены");
         }
-        return buildingMapper.toBuildingWithoutWarehouseForAllBuildingListDTO(buildingList);
+        return buildingList;
     }
 
-    public BuildingDTO findById(Integer id) {
-        return buildingMapper.toBuildingDTO(buildingRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Ресторан не найден")));
+    public Building findById(Integer id) {
+        return buildingRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Ресторан не найден"));
     }
 }

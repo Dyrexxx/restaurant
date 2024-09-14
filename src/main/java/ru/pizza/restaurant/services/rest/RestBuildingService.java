@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.pizza.restaurant.dao.restaurant.BuildingDAO;
 import ru.pizza.restaurant.domain.dto.response.restaurant.all.BuildingWithoutWarehouseForAllBuildingListDTO;
 import ru.pizza.restaurant.domain.dto.response.restaurant.one.BuildingDTO;
+import ru.pizza.restaurant.mapper.BuildingMapper;
 
 import java.util.List;
 
@@ -15,13 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestBuildingService {
     private final BuildingDAO buildingDAO;
+    private final BuildingMapper buildingMapper;
 
     /**
      * @return Возвращает все рестораны
      */
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<BuildingWithoutWarehouseForAllBuildingListDTO> findAll() {
-        return buildingDAO.findAll();
+        return buildingMapper.toBuildingWithoutWarehouseForAllBuildingListDTO(buildingDAO.findAll());
     }
 
     /**
@@ -30,6 +32,6 @@ public class RestBuildingService {
      */
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public BuildingDTO findById(Integer id) {
-        return buildingDAO.findById(id);
+        return buildingMapper.toBuildingDTO(buildingDAO.findById(id));
     }
 }
