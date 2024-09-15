@@ -22,10 +22,6 @@ public class NewDeliveryIngredientDAO {
      */
     public List<IngredientDeliveryDTO> findAll(String id) {
         String sql = "select i.title, i.weight, i.is_new, b.building_id from new_delivery_basket b join new_delivery_ingredients i on b.id=i.basket_id where basket_id=?";
-        List<IngredientDeliveryDTO> ingredientDeliveryDTOS = jdbcTemplate.query(sql, new GetIngredientDeliveryRowMap(), id);
-        if (ingredientDeliveryDTOS.isEmpty()) {
-            throw new RuntimeException("Корзина пуста или не найлена");
-        }
-        return ingredientDeliveryDTOS;
+        return jdbcTemplate.query(sql, new GetIngredientDeliveryRowMap(), id);
     }
 }
