@@ -30,7 +30,7 @@ public class RestBuildingController {
     @Operation(summary = "Найти все рестораны", description = "Находит все рестораны")
     @ApiResponse(responseCode="200", description = "Все рестораны найдены")
     @GetMapping("/buildings")
-    public List<BuildingWithoutWarehouseForAllBuildingListDTO> index() {
+    public List<BuildingDTO> index() {
         return restBuildingService.findAll();
     }
 

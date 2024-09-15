@@ -10,6 +10,6 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface BuildingMapper {
-    List<BuildingWithoutWarehouseForAllBuildingListDTO> toBuildingWithoutWarehouseForAllBuildingListDTO(List<Building> building);
+    List<BuildingDTO> toBuildingDTOList(List<Building> buildingList);
     BuildingDTO toBuildingDTO(Building building);
 }

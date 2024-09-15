@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import ru.pizza.restaurant.domain.dto.response.restaurant.all.BuildingWithoutWarehouseForAllBuildingListDTO;
 import ru.pizza.restaurant.domain.dto.response.restaurant.one.BuildingDTO;
 import ru.pizza.restaurant.exceptions.NoContentException;
 
@@ -15,8 +16,8 @@ import java.util.List;
 public class BuildingService {
     private final RestTemplate restTemplate;
 
-    public List<BuildingDTO> index() {
-        BuildingDTO[] buildingDTOS = restTemplate.getForObject("http://RESTAURANT/restaurant/api/buildings", BuildingDTO[].class);
+    public List<BuildingWithoutWarehouseForAllBuildingListDTO> index() {
+        BuildingWithoutWarehouseForAllBuildingListDTO[] buildingDTOS = restTemplate.getForObject("http://RESTAURANT/restaurant/api/buildings", BuildingWithoutWarehouseForAllBuildingListDTO[].class);
         if (buildingDTOS == null || buildingDTOS.length == 0) {
             throw new NoContentException("index");
         }

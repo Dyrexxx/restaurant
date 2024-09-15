@@ -11,10 +11,13 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
+import ru.pizza.restaurant.domain.dto.batch_update.order_basket.ProductOrderBatchDTO;
 import ru.pizza.restaurant.domain.dto.response.order_basket.BasketOrderDTO;
 import ru.pizza.restaurant.domain.dto.response.order_basket.ProductOrderDTO;
 import ru.pizza.restaurant.row_map.order_basket.GetBasketOrderRowMap;
 
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,16 +86,26 @@ public class OrderBasketDAO {
                             orderId,
                             basketOrderDTO.getFio(),
                             basketOrderDTO.getAddress());
-
+                    List<ProductOrderBatchDTO> listInsert = new ArrayList<>();
                     for (ProductOrderDTO product : basketOrderDTO.getProductsList()) {
                         String productId = String.valueOf(UUID.randomUUID());
-                        jdbcTemplate.update("insert into order_product(id, title, count, building_id, order_basket_id) VALUES (?, ?, ?, ?, ?)",
+                        listInsert.add(new ProductOrderBatchDTO(
                                 productId,
                                 product.getTitle(),
                                 product.getCount(),
-                                product.getBuildingId(),
-                                orderId);
+                                product.getBuildingId()));
                     }
+                    jdbcTemplate.batchUpdate("insert into order_product(id, title, count, building_id, order_basket_id) VALUES (?, ?, ?, ?, ?)",
+                            listInsert,
+                            100,
+                            (PreparedStatement ps, ProductOrderBatchDTO batch) -> {
+                                ps.setString(1, batch.getId());
+                                ps.setString(2, batch.getTitle());
+                                ps.setInt(3, batch.getCount());
+                                ps.setInt(4, batch.getBuildingId());
+                                ps.setString(5, orderId);
+                            }
+                    );
                 }
             });
 
