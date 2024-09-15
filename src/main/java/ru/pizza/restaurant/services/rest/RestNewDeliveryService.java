@@ -14,8 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestNewDeliveryService {
     private final NewDeliveryBasketDAO newDeliveryBasketDAO;
+
     /**
-     *
      * @param id ID ресторана
      * @return Возвращает все доставки, которые в пути, определенного ресторана
      */
@@ -29,7 +29,7 @@ public class RestNewDeliveryService {
      * с бд склада определенного ресторана
      *
      * @param buildingId ID ресторана
-     * @param id ID корзины
+     * @param id         ID корзины
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void update(int buildingId, String id) {

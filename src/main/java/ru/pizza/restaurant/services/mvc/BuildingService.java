@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import ru.pizza.restaurant.domain.dto.response.restaurant.one.BuildingDTO;
+import ru.pizza.restaurant.exceptions.NoContentException;
 
 import java.util.List;
 
@@ -15,9 +16,18 @@ public class BuildingService {
     private final RestTemplate restTemplate;
 
     public List<BuildingDTO> index() {
-        return List.of(restTemplate.getForObject("http://RESTAURANT/restaurant/api/buildings", BuildingDTO[].class));
+        BuildingDTO[] buildingDTOS = restTemplate.getForObject("http://RESTAURANT/restaurant/api/buildings", BuildingDTO[].class);
+        if (buildingDTOS == null || buildingDTOS.length == 0) {
+            throw new NoContentException("index");
+        }
+        return List.of(buildingDTOS);
     }
+
     public BuildingDTO findById(Integer id) {
-        return restTemplate.getForObject("http://RESTAURANT/restaurant/api/buildings/" + id, BuildingDTO.class);
+        BuildingDTO buildingDTO = restTemplate.getForObject("http://RESTAURANT/restaurant/api/buildings/" + id, BuildingDTO.class);
+        if (buildingDTO == null || buildingDTO.getIngredientList() == null || buildingDTO.getIngredientList().isEmpty()) {
+            throw new NoContentException("building", buildingDTO != null ? buildingDTO.getId() : 0);
+        }
+        return buildingDTO;
     }
 }

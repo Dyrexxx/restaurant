@@ -45,11 +45,7 @@ public class OrderBasketDAO {
      */
     public List<BasketOrderDTO> findAll(Integer id) {
         String sql = "select o.id, o.fio, o.address, p.count, p.title, p.building_id from order_basket o join order_product p on o.id=p.order_basket_id where p.building_id=?";
-        List<BasketOrderDTO> basketOrderDTOS = jdbcTemplate.query(sql, new GetBasketOrderRowMap(), id);
-        if (basketOrderDTOS == null || basketOrderDTOS.isEmpty()) {
-            throw new RuntimeException("Корзина пуста");
-        }
-        return basketOrderDTOS;
+        return jdbcTemplate.query(sql, new GetBasketOrderRowMap(), id);
     }
 
     /**

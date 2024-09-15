@@ -13,6 +13,7 @@ import ru.pizza.restaurant.domain.dto.response.new_delivery.BasketDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.response.new_delivery.IngredientDeliveryDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.IngredientFromMainWarehouseDTO;
 import ru.pizza.restaurant.domain.dto.request.from_main_warehouse.NewDeliveryDTO;
+import ru.pizza.restaurant.exceptions.NoContentException;
 import ru.pizza.restaurant.row_map.new_delivery.GetBasketDeliveryRowMap;
 
 import java.sql.PreparedStatement;
@@ -38,11 +39,7 @@ public class NewDeliveryBasketDAO {
      */
     public List<BasketDeliveryDTO> findAll(Integer buildingId) {
         String sql = "SELECT b.id, i.title, i.weight, i.is_new FROM new_delivery_basket b JOIN new_delivery_ingredients i ON b.id=i.basket_id WHERE b.building_id=?";
-        List<BasketDeliveryDTO> basketDeliveryDTOS = jdbcTemplate.query(sql, new GetBasketDeliveryRowMap(), buildingId);
-        if (basketDeliveryDTOS == null || basketDeliveryDTOS.isEmpty()) {
-            throw new RuntimeException("Корзина пуста или не существует");
-        }
-        return basketDeliveryDTOS;
+        return jdbcTemplate.query(sql, new GetBasketDeliveryRowMap(), buildingId);
     }
 
 
@@ -59,8 +56,8 @@ public class NewDeliveryBasketDAO {
                 @Override
                 protected void doInTransactionWithoutResult(@NonNull TransactionStatus status) {
                     List<IngredientDeliveryDTO> ingredientList = newDeliveryIngredientDAO.findAll(basketId);
-                    if (ingredientList.isEmpty()) {
-                        throw new IllegalStateException("Корзина пуста");
+                    if (ingredientList == null || ingredientList.isEmpty()) {
+                        throw new IllegalStateException("Нет доставок");
                     }
                     List<IngredientDeliveryDTO> listInsert = new ArrayList<>();
                     List<IngredientDeliveryDTO> listUpdate = new ArrayList<>();
